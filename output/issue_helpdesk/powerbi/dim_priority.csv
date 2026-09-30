@@ -1,0 +1,5 @@
+priority,sla_reference_hours,source_priority_values
+Critical,4,"Blocker, Highest"
+High,8,High
+Medium,24,Medium
+Low,24,"Low, Lowest"

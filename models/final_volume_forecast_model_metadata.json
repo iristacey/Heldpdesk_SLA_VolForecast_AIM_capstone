@@ -1,0 +1,19 @@
+{
+  "project_name": "Help Desk Ticket SLA and Volume Forecasting",
+  "model_name": "ETS (weekly additive)",
+  "selection_rule": "minimum validation MAE only; test not used for selection",
+  "forecast_calendar_policy": "day_after_history_end_v1",
+  "primary_horizon_days": 30,
+  "validation_mae": 4.393814913939992,
+  "trained_on_rows": 2628,
+  "trained_on_date_start": "2016-01-03",
+  "trained_on_date_end": "2023-03-14",
+  "feature_columns": null,
+  "artifact_path": "models\\final_volume_forecast_model.joblib",
+  "usage": "joblib.load(this artifact).predict(history_series, horizon_days) where history_series is a daily-indexed pandas Series of ticket counts ending immediately before the forecast start date.",
+  "limitations": [
+    "Refit on the full historical series ending March 2023; not validated against current arrivals.",
+    "Selected by minimum validation MAE for the primary horizon only; other horizons may prefer a different model.",
+    "Same zero-arrival-day completeness assumption and non-verified SLA/date caveats as the rest of this project apply."
+  ]
+}

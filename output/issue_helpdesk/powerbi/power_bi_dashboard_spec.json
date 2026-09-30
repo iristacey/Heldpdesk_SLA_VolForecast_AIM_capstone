@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "SLA Attainment (After the Fact Report)",
+    "Daily Volume and Forecast",
+    "Model Comparison",
+    "Data Contract and Caveats"
+  ],
+  "report_fact": "fact_tickets_sla.csv",
+  "report_dimensions": [
+    "dim_priority.csv"
+  ],
+  "report_summary": "sla_summary_by_priority.csv",
+  "forecast_facts": [
+    "fact_daily_ticket_volume.csv",
+    "fact_volume_forecast.csv"
+  ],
+  "forecast_summary": "model_comparison_metrics.csv",
+  "relationships": "Join fact_tickets_sla.priority to dim_priority.priority (many-to-one). Join fact_daily_ticket_volume.date_created to fact_volume_forecast.forecast_date on a shared date dimension when actual-versus-forecast overlays are needed.",
+  "scaling_note": "All tables are rebuilt from data/raw/issues.csv and the persisted rolling forecast tables on every run of run_powerbi_export(); row counts and date ranges are not hardcoded, so a larger or refreshed source file is picked up automatically.",
+  "refresh": "Run the notebooks 01-08 pipeline (or python -c \"from src.issues_capstone import run_powerbi_export; run_powerbi_export()\") after replacing data/raw/issues.csv, then refresh the Power BI model against this output/issue_helpdesk/powerbi folder.",
+  "caveats": [
+    "Historical backtest; SLA mapping is not policy validated.",
+    "Zero arrival day filling is an unverified completeness assumption.",
+    "No protected attributes are present; this is not a fairness dashboard."
+  ],
+  "screenshots": {
+    "folder": "screenshots",
+    "note": "Power BI Desktop is not installed in this environment, so these are rendered screenshot samples of each report page above, built from this same folder's tables, not native .pbix captures.",
+    "files": {
+      "SLA Attainment (After the Fact Report)": "screenshots/01_sla_attainment_report.png",
+      "Daily Volume and Forecast": "screenshots/02_daily_volume_and_forecast.png",
+      "Model Comparison": "screenshots/03_model_comparison.png",
+      "Data Contract and Caveats": "screenshots/04_data_contract_and_caveats.png"
+    }
+  }
+}

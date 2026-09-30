@@ -1,0 +1,23 @@
+# Raw source data: never bake into the image (large files; privacy and
+# attribution obligations). Mount as a volume at run time instead.
+data/raw/*
+!data/raw/.gitkeep
+
+# Generated artifacts: reproducible from code; mount as a volume if needed.
+output/
+
+# Environments, caches and editor/tooling metadata
+.venv/
+.git/
+.idea/
+__pycache__/
+**/__pycache__/
+*.pyc
+.ipynb_checkpoints/
+mlruns/
+notebooks/mlruns/
+mlflow.db
+*.db
+
+# Legacy exports/large notebook checkpoints not needed for the image
+exportToHTML/

@@ -1,0 +1,108 @@
+{
+  "forecast_calendar_policy": "day_after_history_end_v1",
+  "input_sha256": {
+    "daily_counts": "1ff04e953b6c7101e3c647f4f3771bb63062fb66fa636b1f8a6d36b8abfe8181",
+    "predictions": "748b408a59e34c9a4a211052cdf764ac633d1da043aac2278528a240e06db812",
+    "experiment": "6699bbb300536e6bb7aa03963cbfcb8c2fbd0e74f92ce5b676e264b9f584af28"
+  },
+  "model_configuration": {
+    "enabled": true,
+    "project_role": "core_predictive_workstream",
+    "target": "count of issue_type=Ticket records by issue_created calendar day",
+    "source_date_column": "issue_created",
+    "frequency": "daily",
+    "timezone": "UTC",
+    "intended_planning_horizon_days": 30,
+    "evaluation_horizons_days": [
+      7,
+      30
+    ],
+    "weekly_seasonal_period_days": 7,
+    "initial_training_days": 365,
+    "validation_days": 365,
+    "final_test_days": 365,
+    "rolling_origin_stride_days": 7,
+    "complete_daily_coverage": true,
+    "evaluation": {
+      "method": "expanding_window_rolling_origin",
+      "horizon_days": 30,
+      "validation_metric": "MAE",
+      "model_selection": "Lowest validation MAE; final test kept separate until selection is fixed.",
+      "report_metrics": [
+        "MAE",
+        "RMSE",
+        "WAPE",
+        "sMAPE"
+      ],
+      "uncertainty": "Symmetric 90% empirical absolute-error interval calibrated on validation residuals; test coverage is reported and does not guarantee future calibration."
+    },
+    "models": [
+      "seasonal_naive_lag_7",
+      "ets_additive_weekly",
+      "xgboost_autoregression_lags_1_to_28",
+      "ridge_mutual_information_selection_pca"
+    ],
+    "feature_lags_days": 28,
+    "pca_explained_variance": 0.95,
+    "selected_feature_count": 10,
+    "xgboost": {
+      "objective": "reg:squarederror",
+      "n_estimators": 200,
+      "max_depth": 3,
+      "learning_rate": 0.04,
+      "min_child_weight": 3,
+      "subsample": 0.9,
+      "colsample_bytree": 0.9,
+      "reg_lambda": 5.0,
+      "random_state": 42,
+      "n_jobs": 1
+    },
+    "ets": {
+      "trend": "additive",
+      "seasonal": "additive"
+    },
+    "output_directory": "output/issue_helpdesk/volume_forecast",
+    "deployment_status": "research_demonstration_historical_source"
+  },
+  "zero_record_days": 344,
+  "calendar_days": 2628,
+  "recorded_ticket_total": 27348.0,
+  "stress_scenario_total": 28119.0,
+  "method": "Treat every zero-record day as unknown. Replace training-history zeros with the median of the last four observed positive same-weekday counts within the prior 56 days; if absent, use prior observed positive counts within 56 days. No future or imputed values enter replacement statistics. Refit the same ETS, XGBoost and seasonal-naive families on the canonical rolling origins. Compare scenarios only on the identical positive-record targets.",
+  "best_validation_model_among_three_on_positive_dates": [
+    {
+      "scenario": "canonical_zero_fill",
+      "forecast_window_days": 7,
+      "model": "ETS (weekly additive)",
+      "MAE": 4.339813762773288
+    },
+    {
+      "scenario": "canonical_zero_fill",
+      "forecast_window_days": 30,
+      "model": "ETS (weekly additive)",
+      "MAE": 4.503322570805201
+    },
+    {
+      "scenario": "causal_missing_record_stress",
+      "forecast_window_days": 7,
+      "model": "ETS (weekly additive)",
+      "MAE": 4.346213657750174
+    },
+    {
+      "scenario": "causal_missing_record_stress",
+      "forecast_window_days": 30,
+      "model": "ETS (weekly additive)",
+      "MAE": 4.498962624533813
+    }
+  ],
+  "limitations": [
+    "Post-hoc sensitivity, not a new independent holdout or model-selection experiment.",
+    "Missing dates are not proven missing; real zero demand is deliberately replaced.",
+    "Positive-record dates can still be incomplete; their counts are not certified ground truth.",
+    "Excluding zero-record targets changes the estimand and can induce selection bias.",
+    "No true labels exist for the assumed missing days; imputed targets are never scored.",
+    "Ridge is outside this bounded check; no assertion of four-model rank robustness.",
+    "Overlapping 30-day windows reuse targets; pair counts are not independent samples.",
+    "Intervals are not recalibrated; canonical model selection and API artifact are unchanged."
+  ]
+}

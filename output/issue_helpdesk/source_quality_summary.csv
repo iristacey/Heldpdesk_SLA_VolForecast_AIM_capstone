@@ -1,0 +1,17 @@
+quality_check,value
+source_rows,66691
+source_columns,58
+unique_issue_ids,66691
+exact_duplicate_rows,0
+duplicate_project_issue_keys,61
+documented_scope_start,2016-01-01
+records_before_documented_scope,23717
+created_after_resolution_rows,0
+resolution_disposition_date_mismatch_rows,0
+resolution_after_last_change_rows,9
+scoped_ticket_rows,27348
+ticket_creation_dates_missing,0
+resolved_date_missing_in_scoped_tickets,582
+unknown_priority_in_scoped_tickets,9145
+sla_assessed_rows,16735
+negative_elapsed_durations,0

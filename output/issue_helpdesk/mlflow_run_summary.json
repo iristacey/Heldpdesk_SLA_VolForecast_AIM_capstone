@@ -1,0 +1,25 @@
+{
+  "tracking_uri": "sqlite:///C:\\Users\\acbitor\\PycharmProjects\\PythonProject for AIM\\mlflow.db",
+  "experiment_name": "helpdesk_volume_forecast",
+  "run_id": "269964acc5434805acfaeec1245747bd",
+  "logged_params": {
+    "model_name": "ETS (weekly additive)",
+    "selection_rule": "minimum validation MAE only; test not used for selection",
+    "primary_horizon_days": 30,
+    "trained_on_rows": 2628,
+    "trained_on_date_start": "2016-01-03",
+    "trained_on_date_end": "2023-03-14",
+    "validation_calendar_days": 365,
+    "test_calendar_days": 365
+  },
+  "logged_metrics": {
+    "validation_mae": 4.393814913939992,
+    "test_mae": 4.672304845138525,
+    "test_rmse": 7.197035877605334,
+    "test_wape": 0.275066188757133,
+    "test_smape": 0.4132757395207179,
+    "test_coverage_90_interval": 0.8770833333333333
+  },
+  "view_with": "mlflow ui --backend-store-uri \"sqlite:///C:\\Users\\acbitor\\PycharmProjects\\PythonProject for AIM\\mlflow.db\"",
+  "caveat": "Tracks the historical-backtest selection and artifact only; no production training job, current data feed, or deployed serving endpoint is logged."
+}

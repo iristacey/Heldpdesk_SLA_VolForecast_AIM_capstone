@@ -1,0 +1,2 @@
+training_rows,original_features,selected_features,pca_components_for_target_variance,explained_variance_ratio,fit_cutoff,purpose
+1870,34,10,26,0.9537110623218621,2021-03-15T00:00:00+00:00,training-only exploratory reduction of past-count/calendar features; Ridge PCA model is evaluated separately

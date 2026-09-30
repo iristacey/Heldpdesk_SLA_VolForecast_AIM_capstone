@@ -1,0 +1,59 @@
+column,dtype,rows_processed,present_rows,missing_rows,unique_values,meaning_or_caveat
+id,float64,66691,66691,0,66691,Unique source issue identifier.
+started,object,66691,66691,0,66281,Workflow-record start timestamp shown in the source record.
+ended,object,66691,66691,0,65786,Workflow-record end/last-change timestamp shown in the source record.
+issue_num,float64,66691,66691,0,3542,Issue sequence number within its project; not globally unique.
+issue_proj,object,66691,66691,0,358,Masked project code associated with the issue.
+issue_reporter,object,66691,66691,0,1114,Masked user identifier of the issue reporter.
+issue_assignee,object,66691,35644,31047,381,Masked identifier of the last recorded assignee; missingness is substantial.
+issue_contr_count,float64,66691,66691,0,9,Number of users who contributed to the issue.
+issue_type,object,66691,66691,0,15,Issue kind; primary analysis includes exact value Ticket.
+issue_priority,object,66691,66691,0,7,Recorded priority; unknown is excluded from reference assessment.
+issue_created,object,66691,66691,0,66281,Issue creation timestamp; parsed as UTC.
+issue_resolution_date,object,66691,65838,853,64938,Recorded issue resolution timestamp; may be missing.
+issue_resolution,object,66691,65838,853,4,Recorded resolution disposition; SLA cohort requires Done.
+issue_status,object,66691,66691,0,15,"Last recorded workflow status, not complete status history."
+issue_comments_count,int64,66691,66691,0,198,Recorded issue comment count.
+last_change_date,object,66691,66690,1,59651,Timestamp of the last recorded issue update.
+wf_in_review,float64,66691,77,66614,61,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_in_review,int64,66691,66691,0,3,Count of transitions through the named workflow state.
+wf_deployment,float64,66691,135,66556,105,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_deployment,int64,66691,66691,0,5,Count of transitions through the named workflow state.
+wf_resolved,float64,66691,28145,38546,17870,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_resolved,int64,66691,66691,0,9,Count of transitions through the named workflow state.
+wf_open,float64,66691,66613,78,53083,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_open,int64,66691,66691,0,8,Count of transitions through the named workflow state.
+wf_monitoring,float64,66691,518,66173,449,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_monitoring,int64,66691,66691,0,5,Count of transitions through the named workflow state.
+wf_done,float64,66691,860,65831,765,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_done,int64,66691,66691,0,6,Count of transitions through the named workflow state.
+wf_pending_customer_approval,float64,66691,254,66437,254,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_pending_customer_approval,int64,66691,66691,0,6,Count of transitions through the named workflow state.
+wf_rejected,float64,66691,112,66579,110,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_rejected,int64,66691,66691,0,3,Count of transitions through the named workflow state.
+wf_testing_monitoring,float64,66691,290,66401,287,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_testing_monitoring,int64,66691,66691,0,5,Count of transitions through the named workflow state.
+wf_in_progress,float64,66691,36747,29944,30898,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_in_progress,int64,66691,66691,0,24,Count of transitions through the named workflow state.
+wf_reopened,float64,66691,2123,64568,1407,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_reopened,int64,66691,66691,0,7,Count of transitions through the named workflow state.
+wf_to_do,float64,66691,785,65906,732,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_to_do,int64,66691,66691,0,6,Count of transitions through the named workflow state.
+wf_validation,float64,66691,2961,63730,2920,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_validation,int64,66691,66691,0,11,Count of transitions through the named workflow state.
+wf_resolved_under_monitoring,float64,66691,1931,64760,1920,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_resolved_under_monitoring,int64,66691,66691,0,5,Count of transitions through the named workflow state.
+wf_closed,float64,66691,1595,65096,1381,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_closed,int64,66691,66691,0,8,Count of transitions through the named workflow state.
+wf_waiting,float64,66691,19704,46987,19452,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_waiting,int64,66691,66691,0,20,Count of transitions through the named workflow state.
+wf_cancelled,float64,66691,160,66531,131,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_cancelled,int64,66691,66691,0,4,Count of transitions through the named workflow state.
+wf_under_review,float64,66691,1821,64870,1550,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_under_review,int64,66691,66691,0,5,Count of transitions through the named workflow state.
+wf_approved,float64,66691,1630,65061,1539,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_approved,int64,66691,66691,0,8,Count of transitions through the named workflow state.
+wf_pending_deployment,float64,66691,1413,65278,1408,Workflow-derived elapsed seconds spent in the named state; sparse and not substituted for the SLA clock.
+wfe_pending_deployment,int64,66691,66691,0,7,Count of transitions through the named workflow state.
+wf_total_time,float64,66691,66691,0,65322,Workflow-derived total processing seconds; diagnostic only.
+processing_steps,int64,66691,66691,0,47,Number of workflow steps recorded for the issue.

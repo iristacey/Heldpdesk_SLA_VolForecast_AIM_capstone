@@ -1,0 +1,14 @@
+data/raw/*
+output/legacy/models/*.pkl
+output/legacy/models/**/*.pkl
+mlruns/
+__pycache__/
+.env
+.ipynb_checkpoints/
+.venv/
+.idea/
+.pytest_cache/
+presentations/archive/
+~$*.pptx
+~$*.docx
+*.db

@@ -1,0 +1,16 @@
+# Report export (src/generate_final_report.py) has no extra Python package
+# dependencies beyond the standard library. It shells out to two system
+# tools instead of pip packages:
+#
+#   1. Pandoc (https://pandoc.org/installing.html) - converts the Markdown
+#      report source to .docx. Not a Python package; install it separately
+#      (e.g. `winget install --id JohnMacFarlane.Pandoc`, `choco install
+#      pandoc`, or via the Anaconda distribution, which already bundles it).
+#   2. A Chromium-family browser (Microsoft Edge or Google Chrome) - used
+#      headless to print the Pandoc-rendered HTML to .pdf. Most Windows
+#      machines already have Edge installed at the default location the
+#      script checks; override with --browser if yours is elsewhere.
+#
+# This file exists only so `pip install -r requirements-report.txt` is a
+# harmless no-op that documents the real (non-pip) prerequisites, matching
+# the reproducibility instructions in the final report.

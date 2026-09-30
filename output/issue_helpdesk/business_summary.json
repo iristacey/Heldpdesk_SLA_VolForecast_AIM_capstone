@@ -1,0 +1,12 @@
+{
+  "business_question": "Can historical daily Ticket arrivals support useful 7- and 30-day capacity-planning forecasts, and does planner-reviewed use improve outcomes?",
+  "current_evidence": "Historical backtest only; no current operations or intervention outcome data.",
+  "roi_status": "not estimated",
+  "decision_gate": [
+    "Confirm data provenance, full daily coverage, and zero-arrival interpretation.",
+    "Agree acceptable error and service KPIs with capacity owners before future-period evaluation.",
+    "Require stable rolling backtest performance against the same-weekday baseline.",
+    "Run a human-reviewed pilot and measure service and cost outcomes before an ROI claim."
+  ],
+  "assumption_template": "output\\issue_helpdesk\\roi_assumptions_template.csv"
+}

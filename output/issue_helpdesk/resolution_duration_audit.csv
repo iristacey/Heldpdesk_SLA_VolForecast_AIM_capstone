@@ -1,0 +1,2 @@
+rows,min_elapsed_hours,median_elapsed_hours,p95_elapsed_hours,max_elapsed_hours,iqr_low_fence,iqr_high_fence,above_iqr_fence,wf_total_time_duration_spearman
+16735,0.002777777777777778,147.25972222222222,2206.7334644999996,25909.80804,-654.3239861111111,1160.8470138888888,1847,0.9951698352047396

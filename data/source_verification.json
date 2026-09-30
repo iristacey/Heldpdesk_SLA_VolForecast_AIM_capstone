@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "verification_date": "2026-09-30",
+  "verified_at_utc": "2026-09-30T15:07:13.512773+00:00",
+  "status": "identity_verified_by_kaggle_download_and_mendeley_v2_published_sha256",
+  "summary": "The local issues.csv is byte-for-byte equal to issues.csv downloaded anonymously from Kaggle version 1. Its locally computed SHA256 and byte count also match the official Mendeley version-2 public file listing. A direct Mendeley binary download was blocked, so direct binary equality against a separately downloaded Mendeley file was not tested. Coverage and license-label discrepancies remain unresolved.",
+  "local_file": {
+    "path": "data\\raw\\issues.csv",
+    "bytes": 20586538,
+    "sha256": "eab3b8857bc19bd917e0767fb9c30b7714d5468b25c5a1c1cd71a760e9602f02",
+    "data_rows": 66691,
+    "fields": 58,
+    "rows_with_expected_field_count": 66691
+  },
+  "mendeley": {
+    "title": "Help Desk Tickets",
+    "creator": "Mohammad Abdellatif",
+    "dataset_id": "btm76zndnt",
+    "version": 2,
+    "doi": "10.17632/btm76zndnt.2",
+    "landing_url": "https://data.mendeley.com/datasets/btm76zndnt/2",
+    "published_at": "2025-05-30T19:56:05.974Z",
+    "license": {
+      "name": "Creative Commons Attribution 4.0 International",
+      "short_name": "CC BY 4.0",
+      "url": "http://creativecommons.org/licenses/by/4.0",
+      "evidence": "Version-2 landing-page licence and embedded dataset.snapshot.licence metadata.",
+      "caveat": "The source requests appropriate credit, a license link and indication of changes, and notes that further permission may be required for identified third-party content."
+    },
+    "files_api_url": "https://data.mendeley.com/public-api/datasets/btm76zndnt/files?folder_id=root&version=2",
+    "file": {
+      "name": "issues.csv",
+      "file_id": "2018b884-181a-482b-8a06-a86bbf41f4e7",
+      "content_id": "aff69425-a65d-4c24-b976-d5ae63afb699",
+      "content_type": "text/csv",
+      "created_at": "2025-04-18T20:56:31.747Z",
+      "bytes": 20586538,
+      "published_sha256": "eab3b8857bc19bd917e0767fb9c30b7714d5468b25c5a1c1cd71a760e9602f02",
+      "download_url": "https://data.mendeley.com/public-files/datasets/btm76zndnt/files/2018b884-181a-482b-8a06-a86bbf41f4e7/file_downloaded",
+      "view_url": "https://data.mendeley.com/public-files/datasets/btm76zndnt/files/2018b884-181a-482b-8a06-a86bbf41f4e7/file_viewed"
+    },
+    "comparison": {
+      "status": "published_sha256_and_size_match",
+      "local_matches_published_sha256": true,
+      "downloaded_kaggle_member_matches_published_sha256": true,
+      "direct_mendeley_download_obtained": false,
+      "direct_mendeley_download_computed_sha256": null,
+      "direct_mendeley_bytes_comparison": "not_performed_http_403",
+      "interpretation": "Cryptographic identity to the listed version-2 file is supported by its official published SHA256 and size, plus a fresh independently downloaded Kaggle member. This is not a claim that Mendeley binary bytes were directly retrieved."
+    }
+  },
+  "kaggle": {
+    "title": "Help Desk Tickets (Mendeley Data)",
+    "owner": "janebitor",
+    "creator_name": "Jane Bitor",
+    "dataset_id": 12266716,
+    "dataset_ref": "janebitor/help-desk-tickets-mendeley-data",
+    "version": 1,
+    "version_created_at": "2026-09-29T08:17:01.507Z",
+    "version_notes": "Initial release",
+    "landing_url": "https://www.kaggle.com/datasets/janebitor/help-desk-tickets-mendeley-data",
+    "metadata_api_url": "https://www.kaggle.com/api/v1/datasets/view/janebitor/help-desk-tickets-mendeley-data",
+    "files_api_url": "https://www.kaggle.com/api/v1/datasets/list/janebitor/help-desk-tickets-mendeley-data",
+    "download_url": "https://www.kaggle.com/api/v1/datasets/download/janebitor/help-desk-tickets-mendeley-data?datasetVersionNumber=1",
+    "metadata_license_name": "CC0: Public Domain",
+    "metadata_description": "",
+    "license_status": "conflicts_with_original_mendeley_cc_by_4_0",
+    "license_interpretation": "The Kaggle CC0 label does not establish authority to remove the original CC BY 4.0 attribution obligations. Preserve the original Mendeley attribution and license; resolve the inconsistent mirror label before claiming CC0 or unrestricted redistribution.",
+    "archive": {
+      "http_status": 200,
+      "content_type": "application/zip",
+      "bytes": 14221698,
+      "computed_sha256": "8a5366a602640b8148ae388b08be7d8748b9757e2a8c2a6c868b1f8a5293d3ff",
+      "member_count": 9,
+      "note": "Archive hash identifies the downloaded ZIP response; repackaging can change it without changing member contents."
+    },
+    "file": {
+      "archive_member": "issues.csv",
+      "listed_file_created_at": "2026-09-29T08:17:09.106Z",
+      "bytes": 20586538,
+      "computed_sha256": "eab3b8857bc19bd917e0767fb9c30b7714d5468b25c5a1c1cd71a760e9602f02"
+    },
+    "comparison": {
+      "status": "exact_byte_match",
+      "direct_byte_equality": true,
+      "sha256_equal": true,
+      "normalization_applied": false,
+      "normalized_content_comparison": "unnecessary_exact_bytes_equal"
+    }
+  },
+  "source_documentation": [
+    {
+      "name": "FEATURES.md",
+      "mendeley_file_id": "1e69b233-0353-479c-9d38-5b612f5ce85d",
+      "mendeley_content_id": "1a60cfb6-f063-477b-8226-7ee4298a0838",
+      "mendeley_download_url": "https://data.mendeley.com/public-files/datasets/btm76zndnt/files/1e69b233-0353-479c-9d38-5b612f5ce85d/file_downloaded",
+      "retrieved_from": "FEATURES.md member of the pinned Kaggle version-1 archive",
+      "bytes": 14208,
+      "computed_sha256": "5b8055540d2879f5123f62ef2d87becfe5c4712d175ccc3d8a091c709c5157a4",
+      "matches_mendeley_v2_published_sha256": true,
+      "findings": [
+        "The issues.csv section states that the dataset contains issues reported from January 2016 until March 2023.",
+        "issue_created is defined as the creation time of the issue; issue_resolution_date is its resolution time; last_change_date is its last update time.",
+        "wf_total_time is total processing time in seconds; wf_ and wfe_ fields are aggregations and calculations from issues_change_history.csv.",
+        "The issues_snapshot.csv section describes started and ended as assignee work-cycle boundaries, not replacements for issue creation time.",
+        "Data masking is described for marked fields and provider identifiers; the document does not explain pre-2016 issue_created values or document timestamp shifting.",
+        "The document does not establish a business-hours SLA calendar, pause policy, contractual thresholds or complete day-by-day coverage."
+      ]
+    },
+    {
+      "name": "EXAMPLE.md",
+      "mendeley_file_id": "a3f0fa69-733d-407f-b6c5-aeb5ce82e05f",
+      "mendeley_content_id": "974608bb-4ff7-4b0c-bb40-281745089b25",
+      "mendeley_download_url": "https://data.mendeley.com/public-files/datasets/btm76zndnt/files/a3f0fa69-733d-407f-b6c5-aeb5ce82e05f/file_downloaded",
+      "retrieved_from": "EXAMPLE.md member of the pinned Kaggle version-1 archive",
+      "bytes": 27503,
+      "computed_sha256": "71de05944e1f1a3240d22716b292eb0586e00423b15bdf1a7513c6f66d945696",
+      "matches_mendeley_v2_published_sha256": true,
+      "findings": [
+        "The example explains workflow-state seconds calculated from change history and separate processing cycles per assignee.",
+        "It supplies no explanation for the discrepancy between the stated coverage period and pre-2016 issue creation timestamps."
+      ]
+    }
+  ],
+  "coverage": {
+    "status": "unresolved_source_description_vs_source_content",
+    "documented_period": "January 2016 through March 2023",
+    "timestamp_field": "issue_created",
+    "parsed_nonmissing_timestamps": 66691,
+    "all_timestamp_offsets_utc": true,
+    "observed_min_utc": "2007-04-15T08:12:11+00:00",
+    "observed_max_utc": "2023-03-14T14:00:32+00:00",
+    "rows_before_2016_01_01_utc": 23717,
+    "ticket_rows_before_2016_01_01_utc": 17927,
+    "supported_conclusion": "The early timestamps are in the exact public Kaggle file whose hash matches Mendeley version 2, not an observed local alteration. They include Ticket rows, so restricting issue_type to Ticket alone does not remove the discrepancy.",
+    "cause": null,
+    "unsupported_explanations_not_assumed": [
+      "Historical backlog or migration",
+      "Timestamp anonymization or shifting",
+      "A different time-field definition of the advertised reporting period",
+      "Complete coverage of every day in the advertised period"
+    ],
+    "provider_confirmation_needed": true
+  },
+  "access_attempts": [
+    {
+      "url": "https://data.mendeley.com/datasets/btm76zndnt/2",
+      "result": "Public web_fetch succeeded including embedded version/license metadata; direct Python urllib request returned HTTP 403."
+    },
+    {
+      "url": "https://data.mendeley.com/public-api/datasets/btm76zndnt/versions/2",
+      "result": "Exploratory endpoint: direct Python urllib returned HTTP 403; web_fetch returned HTTP 404. Not used as release evidence."
+    },
+    {
+      "url": "https://data.mendeley.com/public-api/datasets/btm76zndnt/files?folder_id=root&version=2",
+      "result": "Public web_fetch succeeded and returned version-scoped file identifiers, byte counts, SHA256 hashes and download/view URLs."
+    },
+    {
+      "url": "https://data.mendeley.com/public-files/datasets/btm76zndnt/files/2018b884-181a-482b-8a06-a86bbf41f4e7/file_downloaded",
+      "result": "Direct Python urllib returned HTTP 403; no binary obtained."
+    },
+    {
+      "url": "https://data.mendeley.com/public-files/datasets/btm76zndnt/files/2018b884-181a-482b-8a06-a86bbf41f4e7/file_viewed",
+      "result": "Distinct official public URL supplied by the files API also returned HTTP 403; no binary obtained."
+    },
+    {
+      "url": "https://www.kaggle.com/datasets/janebitor/help-desk-tickets-mendeley-data",
+      "result": "Public web_fetch returned title only; official public APIs supplied usable metadata."
+    },
+    {
+      "url": "https://www.kaggle.com/api/v1/datasets/view/janebitor/help-desk-tickets-mendeley-data",
+      "result": "Unauthenticated Python urllib HTTP 200; dataset ID, owner, current version, publication time and license label read."
+    },
+    {
+      "url": "https://www.kaggle.com/api/v1/datasets/list/janebitor/help-desk-tickets-mendeley-data",
+      "result": "Unauthenticated Python urllib HTTP 200; issues.csv listed with 20586538 bytes."
+    },
+    {
+      "url": "https://www.kaggle.com/api/v1/datasets/download/janebitor/help-desk-tickets-mendeley-data?datasetVersionNumber=1",
+      "result": "Unauthenticated Python urllib HTTP 200 application/zip; pinned archive downloaded and selected members read locally."
+    }
+  ],
+  "method": {
+    "runtime": "Existing project .venv\\Scripts\\python.exe with standard-library urllib.request, zipfile, hashlib, csv and datetime; no dependency installation.",
+    "network_privacy": "Only public source URLs were requested. No local data, hashes or code were sent to a search service or uploaded to any source. No authentication, credentials, access-control bypass or third-party search service was used.",
+    "identity_check": "Recomputed local SHA256; computed SHA256 of the downloaded Kaggle archive and uncompressed issues.csv member; compared local and downloaded member bytes directly; compared both SHA256 values and sizes with Mendeley version-2 public metadata.",
+    "csv_check": "Parsed UTF-8-sig CSV with csv.DictReader and newline preservation; counted data rows and fields; parsed all issue_created timestamps with datetime.fromisoformat, confirmed UTC offsets and counted dates before 2016-01-01 UTC.",
+    "documentation_check": "Read FEATURES.md and the EXAMPLE.md workflow explanation from the public archive; checked their locally computed hashes against Mendeley's version-2 listing.",
+    "temporary_download_directory": "output\\issue_helpdesk\\source_verification_temp",
+    "retained_downloads": false,
+    "persistent_evidence_path": "data\\source_verification.json",
+    "reproduction": [
+      "GET the Mendeley version-scoped files API URL and record issues.csv file/content IDs, size and published SHA256.",
+      "GET Kaggle metadata and its explicitly version-1 download URL without credentials.",
+      "Read issues.csv from the ZIP and compute SHA256 locally; compare it and its byte length to the raw local file and Mendeley listing.",
+      "Perform direct local-bytes versus ZIP-member-bytes equality, with no newline or CSV normalization.",
+      "Inspect the public FEATURES.md and EXAMPLE.md members and confirm their hashes against Mendeley.",
+      "Remove only files created for this verification after recording evidence."
+    ]
+  },
+  "limitations": [
+    "Mendeley direct binary retrieval was blocked. Identity to Mendeley is a cryptographic comparison with its official published checksum, not a fresh direct Mendeley byte comparison.",
+    "Identity of this file does not establish completeness of extraction, authentic business demand on zero-record days, provider-system correctness, or current-period representativeness.",
+    "The stated 2016-2023 coverage and observed 2007-2023 creation timestamps remain inconsistent; no causal explanation is supported by the inspected release documents.",
+    "Kaggle's CC0 label conflicts with the original release's CC BY 4.0. This verification does not establish the uploader's relicensing authority or legal clearance.",
+    "Public availability, masking and matching bytes do not establish privacy safety, permission for every third-party element, or approval to publish row-level data.",
+    "Source identity does not validate project SLA mappings, thresholds, clock semantics, forecasting assumptions or other operational policies.",
+    "Only issues.csv and the two documentation members were compared to Mendeley hashes; other dataset members were not audited.",
+    "The original provider database and linked research implementation were not audited; this evidence records the public listing and downloads observed on the verification date."
+  ]
+}

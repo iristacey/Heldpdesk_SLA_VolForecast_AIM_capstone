@@ -1,0 +1,141 @@
+{
+  "selection_rule": "minimum validation MAE only; test not used for selection",
+  "forecast_calendar_policy": "day_after_history_end_v1",
+  "primary_horizon_days": 30,
+  "selected_model": "ETS (weekly additive)",
+  "selected_models_by_horizon": {
+    "7": {
+      "selected_model": "XGBoost autoregression (28-day lags)",
+      "validation_mae": 4.181157049978827,
+      "validation_metrics": [
+        {
+          "split": "validation",
+          "model": "XGBoost autoregression (28-day lags)",
+          "forecast_window_days": 7,
+          "forecast_days": 364,
+          "forecast_origins": 52,
+          "MAE": 4.181157049978827,
+          "RMSE": 6.020386461720699,
+          "WAPE": 0.3150364657818864,
+          "sMAPE": 0.5415008637036139,
+          "signed_bias_actual_minus_forecast": 1.3095402757708843,
+          "validation_abs_error_p90": 9.359890270233151,
+          "coverage_90_interval": NaN,
+          "interpretation": "historical backtest; transfer to current operations is unverified"
+        },
+        {
+          "split": "validation",
+          "model": "ETS (weekly additive)",
+          "forecast_window_days": 7,
+          "forecast_days": 364,
+          "forecast_origins": 52,
+          "MAE": 4.227265985924956,
+          "RMSE": 5.790660377151756,
+          "WAPE": 0.3185106228268855,
+          "sMAPE": 0.5474981102556086,
+          "signed_bias_actual_minus_forecast": 0.3338678215459568,
+          "validation_abs_error_p90": 8.801554099439954,
+          "coverage_90_interval": NaN,
+          "interpretation": "historical backtest; transfer to current operations is unverified"
+        },
+        {
+          "split": "validation",
+          "model": "Ridge (MI-selected features + PCA)",
+          "forecast_window_days": 7,
+          "forecast_days": 364,
+          "forecast_origins": 52,
+          "MAE": 4.323507467977262,
+          "RMSE": 6.293326118136533,
+          "WAPE": 0.3257621027414041,
+          "sMAPE": 0.5487469494870756,
+          "signed_bias_actual_minus_forecast": 1.8737565582036482,
+          "validation_abs_error_p90": 9.491934984728285,
+          "coverage_90_interval": NaN,
+          "interpretation": "historical backtest; transfer to current operations is unverified"
+        },
+        {
+          "split": "validation",
+          "model": "Seasonal naive (same weekday last week)",
+          "forecast_window_days": 7,
+          "forecast_days": 364,
+          "forecast_origins": 52,
+          "MAE": 5.142857142857143,
+          "RMSE": 7.473396038726193,
+          "WAPE": 0.38749741254398673,
+          "sMAPE": 0.5726761889767182,
+          "signed_bias_actual_minus_forecast": 0.09340659340659341,
+          "validation_abs_error_p90": 12.0,
+          "coverage_90_interval": NaN,
+          "interpretation": "historical backtest; transfer to current operations is unverified"
+        }
+      ]
+    },
+    "30": {
+      "selected_model": "ETS (weekly additive)",
+      "validation_mae": 4.393814913939992,
+      "validation_metrics": [
+        {
+          "split": "validation",
+          "model": "ETS (weekly additive)",
+          "forecast_window_days": 30,
+          "forecast_days": 359,
+          "forecast_origins": 48,
+          "MAE": 4.393814913939992,
+          "RMSE": 6.08867227314457,
+          "WAPE": 0.3212701064320904,
+          "sMAPE": 0.5348207910608404,
+          "signed_bias_actual_minus_forecast": 0.7771261919177357,
+          "validation_abs_error_p90": 9.12541598212105,
+          "coverage_90_interval": NaN,
+          "interpretation": "historical backtest; transfer to current operations is unverified"
+        },
+        {
+          "split": "validation",
+          "model": "XGBoost autoregression (28-day lags)",
+          "forecast_window_days": 30,
+          "forecast_days": 359,
+          "forecast_origins": 48,
+          "MAE": 4.68499862074645,
+          "RMSE": 6.712644275827571,
+          "WAPE": 0.3425610852988163,
+          "sMAPE": 0.5651016998594038,
+          "signed_bias_actual_minus_forecast": 2.3079056387663717,
+          "validation_abs_error_p90": 10.572962093353278,
+          "coverage_90_interval": NaN,
+          "interpretation": "historical backtest; transfer to current operations is unverified"
+        },
+        {
+          "split": "validation",
+          "model": "Ridge (MI-selected features + PCA)",
+          "forecast_window_days": 30,
+          "forecast_days": 359,
+          "forecast_origins": 48,
+          "MAE": 4.778375485277019,
+          "RMSE": 6.856467993129234,
+          "WAPE": 0.3493886817710423,
+          "sMAPE": 0.5522724752863964,
+          "signed_bias_actual_minus_forecast": 2.6258591102492295,
+          "validation_abs_error_p90": 10.473873825613675,
+          "coverage_90_interval": NaN,
+          "interpretation": "historical backtest; transfer to current operations is unverified"
+        },
+        {
+          "split": "validation",
+          "model": "Seasonal naive (same weekday last week)",
+          "forecast_window_days": 30,
+          "forecast_days": 359,
+          "forecast_origins": 48,
+          "MAE": 5.4118055555555555,
+          "RMSE": 7.803088775891534,
+          "WAPE": 0.39570427541383163,
+          "sMAPE": 0.6075284186953944,
+          "signed_bias_actual_minus_forecast": 0.41597222222222224,
+          "validation_abs_error_p90": 13.0,
+          "coverage_90_interval": NaN,
+          "interpretation": "historical backtest; transfer to current operations is unverified"
+        }
+      ]
+    }
+  },
+  "validation_mae": 4.393814913939992
+}

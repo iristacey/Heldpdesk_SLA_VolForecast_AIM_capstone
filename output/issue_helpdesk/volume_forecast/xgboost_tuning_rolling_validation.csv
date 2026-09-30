@@ -1,0 +1,3 @@
+forecast_window_days,baseline_validation_mae,candidate_validation_mae,candidate_wins
+7,4.181157049978827,4.181157049978827,False
+30,4.68499862074645,4.68499862074645,False

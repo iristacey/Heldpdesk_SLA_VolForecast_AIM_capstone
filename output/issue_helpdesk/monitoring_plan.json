@@ -1,0 +1,12 @@
+{
+  "status": "offline historical monitoring only; no live feed or scheduled job",
+  "monitor": [
+    "Daily source row counts and date completeness",
+    "Weekly and monthly actual-versus-forecast signed bias and MAE",
+    "Validation-calibrated interval coverage on future data",
+    "Priority-reference mapping and resolution-date quality",
+    "Data/schema drift and sustained ticket mix changes"
+  ],
+  "response": "Pause operational use on source gaps, sustained under-forecasting, interval undercoverage, or failed owner-approved tolerance; investigate before retraining.",
+  "human_review": "Capacity planner approves actions and records overrides; forecast does not allocate staffing automatically."
+}

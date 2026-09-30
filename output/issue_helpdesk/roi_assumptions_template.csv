@@ -1,0 +1,6 @@
+input,value,unit,required_evidence
+Annual ticket volume,,tickets/year,Owner-confirmed representative volume
+Staffing cost per hour,,currency/hour,Finance-approved fully loaded cost
+Forecast-guided intervention cost,,currency/year,Measure in a controlled pilot
+Service outcome value,,currency or approved KPI,Do not infer from forecast error
+Intervention effectiveness,,fraction,Estimate from credible comparison
