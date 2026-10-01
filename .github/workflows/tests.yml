@@ -4,9 +4,14 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -15,14 +20,17 @@ jobs:
           cache: pip
       - name: Install linting tools
         run: python -m pip install --upgrade pip ruff
-      - name: Check Python syntax and undefined names
-        run: |
-          python -m py_compile src/*.py
-          ruff check --select E9,F63,F7,F82 src tests
+      - name: Check Python syntax
+        run: python -m py_compile src/*.py
+      - name: Ruff lint (full checks)
+        run: ruff check src tests
+      - name: Ruff format check
+        run: ruff format --check src tests
 
   test:
     needs: lint
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -36,6 +44,7 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: test
     steps:
       - uses: actions/checkout@v4
@@ -46,6 +55,7 @@ jobs:
 
   api-smoke-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs: docker
     steps:
       - uses: actions/checkout@v4
