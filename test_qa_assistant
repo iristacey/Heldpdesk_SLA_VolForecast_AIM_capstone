@@ -1,0 +1,9 @@
+from pathlib import Path
+from src.qa_assistant import answer_question
+
+def test_answer_question_reads_docs(tmp_path: Path):
+    d = tmp_path / "docs"
+    d.mkdir()
+    (d / "README.md").write_text("Priority based SLA and 7-day forecast.", encoding="utf-8")
+    out = answer_question("How does SLA work?", str(d))
+    assert "priority" in out.lower()
