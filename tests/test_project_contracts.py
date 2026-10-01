@@ -1,5 +1,6 @@
 import json
 import unittest
+from datetime import date, timedelta
 from pathlib import Path
 
 import numpy as np
@@ -195,20 +196,34 @@ class ProjectContractTests(unittest.TestCase):
         self.assertTrue(np.all(np.isfinite(forecast)))
 
     def test_forecast_artifacts_record_corrected_calendar_alignment(self):
+        def reject_nonfinite(value):
+            raise ValueError(f"Non-standard JSON constant: {value}")
+
         paths = [
             REPORTS / "volume_forecast_experiment.json",
             REPORTS / "volume_forecast_model_selection.json",
             MODELS_DIR / "final_volume_forecast_model_metadata.json",
+            PROJECT_REPORTS / "dashboard_data_contract.json",
+            PROJECT_REPORTS / "powerbi" / "dashboard_data_contract.json",
+            ROOT / "presentations" / "volume_forecast_experiment.json",
         ]
         for path in paths:
             if not path.is_file():
                 self.skipTest("Run Notebook 03 to produce forecast artifacts.")
-            metadata = json.loads(path.read_text(encoding="utf-8"))
-            self.assertEqual(
-                metadata.get("forecast_calendar_policy"),
-                FORECAST_CALENDAR_POLICY,
-                f"{path.name} predates the forecast-calendar fix; re-run Notebook 03.",
+            metadata = json.loads(
+                path.read_text(encoding="utf-8"), parse_constant=reject_nonfinite
             )
+            if path.name != "dashboard_data_contract.json":
+                self.assertEqual(
+                    metadata.get("forecast_calendar_policy"),
+                    FORECAST_CALENDAR_POLICY,
+                    f"{path.name} predates the forecast-calendar fix; re-run Notebook 03.",
+                )
+            selection = metadata.get("daily_volume_forecast", metadata)
+            for model in selection.get("selected_models_by_horizon", {}).values():
+                for metric in model["validation_metrics"]:
+                    self.assertEqual(metric["split"], "validation")
+                    self.assertIsNone(metric["coverage_90_interval"])
 
     def test_mlflow_run_summary_matches_persisted_model(self):
         summary_path = PROJECT_REPORTS / "mlflow_run_summary.json"
@@ -262,17 +277,39 @@ class ProjectContractTests(unittest.TestCase):
         self.assertEqual(health.json()["status"], "ok")
         self.assertEqual(health.json()["model_name"], metadata["model_name"])
 
-        forecast = client.get("/forecast", params={"horizon_days": 7})
-        self.assertEqual(forecast.status_code, 200)
-        body = forecast.json()
-        self.assertEqual(body["model_name"], metadata["model_name"])
-        self.assertEqual(len(body["forecast"]), 7)
-        self.assertTrue(all(np.isfinite(row["forecast_tickets"]) for row in body["forecast"]))
-        self.assertIn("caveat", body)
-        self.assertIn("historical", body["caveat"].lower())
+        metadata_response = client.get("/model/metadata")
+        self.assertEqual(metadata_response.status_code, 200)
+        self.assertEqual(metadata_response.json(), metadata)
+        default = client.get("/forecast")
+        self.assertEqual(default.status_code, 200)
+        self.assertEqual(default.json()["horizon_days"], 30)
 
-        out_of_range = client.get("/forecast", params={"horizon_days": 0})
-        self.assertEqual(out_of_range.status_code, 422)
+        for horizon in (1, 7, 30, 90):
+            with self.subTest(horizon=horizon):
+                forecast = client.get("/forecast", params={"horizon_days": horizon})
+                self.assertEqual(forecast.status_code, 200)
+                body = forecast.json()
+                self.assertEqual(body["model_name"], metadata["model_name"])
+                self.assertEqual(body["horizon_days"], horizon)
+                self.assertEqual(len(body["forecast"]), horizon)
+                self.assertEqual(body["history_ends"], metadata["trained_on_date_end"])
+                self.assertEqual(body["trained_on_date_end"], metadata["trained_on_date_end"])
+                start = date.fromisoformat(body["history_ends"]) + timedelta(days=1)
+                self.assertEqual(
+                    [row["date"] for row in body["forecast"]],
+                    [(start + timedelta(days=lead)).isoformat() for lead in range(horizon)],
+                )
+                for row in body["forecast"]:
+                    self.assertEqual(set(row), {"date", "forecast_tickets"})
+                    self.assertTrue(np.isfinite(row["forecast_tickets"]))
+                    self.assertGreaterEqual(row["forecast_tickets"], 0)
+                self.assertEqual(body["limitations"], metadata["limitations"])
+                self.assertIn("historical", body["caveat"].lower())
+
+        for horizon in (0, -1, 91, "abc", "7.5"):
+            with self.subTest(invalid_horizon=horizon):
+                response = client.get("/forecast", params={"horizon_days": horizon})
+                self.assertEqual(response.status_code, 422)
 
     def test_rebuilt_decks_are_within_rubric_slide_range(self):
         from pptx import Presentation

@@ -1,6 +1,6 @@
 # Generated output (canonical artifact root)
 
-**In summary:** this folder holds the current project's analysis tables, charts and reports under `issue_helpdesk/`. Obsolete artifacts from the earlier project have been removed. All active presentation deliverables, including the poster and both decks, are together in the root [`presentations/`](../presentations/README.md) folder.
+**In summary:** this folder holds the project's analysis tables, charts and reports under `issue_helpdesk/`. All active presentation deliverables, including the poster and both decks, are together in the root [`presentations/`](../presentations/README.md) folder.
 
 `output/` is the canonical location for analysis and report artifacts.
 Presentation files live in `presentations/`, and the persisted model lives in

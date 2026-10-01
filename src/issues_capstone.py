@@ -859,7 +859,10 @@ def run_volume_forecast() -> dict:
         selected_models[str(horizon)] = {
             "selected_model": horizon_validation.iloc[0]["model"],
             "validation_mae": float(horizon_validation.iloc[0]["MAE"]),
-            "validation_metrics": horizon_validation.to_dict(orient="records"),
+            # Coverage is evaluated on test targets, not the calibration split.
+            "validation_metrics": horizon_validation.assign(
+                coverage_90_interval=None
+            ).to_dict(orient="records"),
         }
     primary_horizon = int(cfg["intended_planning_horizon_days"])
     primary_selection = selected_models[str(primary_horizon)]
@@ -872,7 +875,7 @@ def run_volume_forecast() -> dict:
         "validation_mae": primary_selection["validation_mae"],
     }
     (REPORTS / "volume_forecast_model_selection.json").write_text(
-        json.dumps(selection, indent=2), encoding="utf-8"
+        json.dumps(selection, indent=2, allow_nan=False), encoding="utf-8"
     )
     model_metadata = persist_final_model(series, primary_selection, cfg, selection["selection_rule"])
     if importances:
@@ -951,7 +954,7 @@ def run_volume_forecast() -> dict:
         ],
     }
     (REPORTS / "volume_forecast_experiment.json").write_text(
-        json.dumps(metadata, indent=2), encoding="utf-8"
+        json.dumps(metadata, indent=2, allow_nan=False), encoding="utf-8"
     )
     return metadata
 
@@ -1431,7 +1434,7 @@ def run_reporting() -> dict:
         "roi_claim": "not calculated; intervention and cost inputs are unavailable",
     }
     (PROJECT_REPORTS / "dashboard_data_contract.json").write_text(
-        json.dumps(contract, indent=2), encoding="utf-8"
+        json.dumps(contract, indent=2, allow_nan=False), encoding="utf-8"
     )
     sla.to_csv(PROJECT_REPORTS / "dashboard_sla_summary.csv", index=False)
     forecast.to_csv(PROJECT_REPORTS / "dashboard_forecast_metrics.csv", index=False)

@@ -83,7 +83,7 @@ def build_pdf(pandoc: str, browser: str) -> None:
             str(REPORT_HTML),
             "--from=gfm",
             "--standalone",
-            "--metadata=title:Final Capstone Report",
+            "--metadata=pagetitle:Final Capstone Report",
             "--css=",
         ],
         check=True,

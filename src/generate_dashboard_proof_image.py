@@ -7,7 +7,7 @@ screenshot cannot be produced. This script renders the same underlying data
 output/issue_helpdesk/dashboard_forecast_metrics.csv) as a dashboard style
 image using matplotlib, styled to resemble a BI report page (KPI cards plus
 charts), so there is a visual artifact backed by the current project's
-figures rather than the legacy project's data.
+figures.
 
 Output: output/issue_helpdesk/dashboard_proof_visual.png
 """

@@ -185,7 +185,7 @@ def deck_content():
             "Retrospective: compare elapsed resolution time with configured priority references.",
             "Predictive: count exact Ticket-type issues created per UTC day; evaluate 7- and 30-day paths.",
             "Primary metrics: reference attainment by priority; forecast MAE/RMSE, WAPE/sMAPE and interval coverage.",
-            "No live alert is defined. SLA references are inherited project assumptions, not verified policy.",
+            "No live alert is defined. SLA references are project-configured assumptions, not verified policy.",
         ]),
         ("Source, scope and data quality", [
             "Identity: Kaggle v1 bytes and Mendeley v2 digest match. Original CC BY 4.0 conflicts with Kaggle's CC0 label.",
@@ -286,7 +286,7 @@ def deck_content():
         ("Historical SLA-reference picture", [
             "Reference attainment by priority (see table below):",
         ], priority_table, [
-            "Thresholds and priority mapping are carried forward as project settings, not owner-approved policy.",
+            "Thresholds and priority mapping are project settings, not owner-approved policy.",
             "Calendar wall-clock duration may not match the official SLA clock.",
         ]),
         ("Month-ahead forecast result", [
@@ -305,7 +305,7 @@ def deck_content():
         ("What remains unknown", [
             "Whether dates with no rows are fully covered zero-ticket days.",
             "Whether the historical, masked-project data matches the target service today.",
-            "Whether the inherited priority targets and time clock match approved SLA policy.",
+            "Whether the configured priority targets and time clock match approved SLA policy.",
             "No staffing savings, avoided breach impact or ROI has been measured.",
         ]),
         ("Safe path forward", [

@@ -42,7 +42,7 @@ priority_sla_assessment:
     High: 8
     Medium: 24
     Low: 24
-  target_basis: "Project-configured references carried forward from the prior project; not independently verified service policy."
+  target_basis: "Project-configured analytical references; not independently verified service policy."
   applicability_status: "Not policy-validated. Priority mapping and target applicability require service-owner confirmation."
   retrospective_cohort:
     issue_type: Ticket

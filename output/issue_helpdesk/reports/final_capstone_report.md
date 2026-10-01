@@ -1,12 +1,19 @@
----
-title: "Final Capstone Report — Help Desk Ticket SLA and Volume Forecasting"
-author: "Capstone Project, Postgraduate Diploma in Artificial Intelligence and Machine Learning"
-date: "September 2026"
----
-
 # Final Capstone Report
 
 ## Help Desk Ticket SLA and Volume Forecasting
+
+**Ana Jane C. Bitor**  
+Postgraduate Diploma in Artificial Intelligence and Machine Learning  
+Capstone Project, September 2026  
+Publication-status update: 1 October 2026 (UTC+08:00)
+
+> **Repository update:** this submission is now hosted at
+> [Heldpdesk_SLA_VolForecast_AIM_capstone](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone).
+> [New-repository run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
+> passed at commit `744b0770a5426dbee5be86a657aed44127057d75` before this synchronized update.
+> Run #10 and its detailed pass/skip counts below are historical evidence from the
+> previous repository. They must not be attributed to the new repository or this
+> update. Confirm the new CI result after uploading the synchronized files.
 
 > **Validation status:** all eight notebooks completed with the actual
 > project `.venv` kernel after the recursive-calendar correction. The local
@@ -16,7 +23,13 @@ date: "September 2026"
 > not a Git clone, fresh dependency installation, Docker or cloud CI run. Validation selects
 > **XGBoost at 7 days** and **ETS at the primary 30-day horizon**.
 > The earlier SciPy DLL block no longer reproduces; no policy bypass was used.
-> Docker and GitHub Actions were not executed; GitHub publication is not complete.
+> The expanded local suite subsequently passed **52 tests without skips**.
+> The project is now [published on GitHub](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone).
+> [Verified CI run #10](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36751513094)
+> passed both jobs at commit `f02b76854f8d27fed5d37b92ed032d6362088399`:
+> Python discovered 52 tests, with 44 passing and 8 skipped; the Docker
+> test image discovered 52, with 33 passing and 19 skipped.
+> These lightweight checks do not reproduce the full analysis or deploy the API.
 
 An actual localhost HTTP demonstration also passed: health returned OK,
 seven ETS forecast points started on 2023-03-15, and an invalid horizon
@@ -27,8 +40,8 @@ shapes or stale pre-correction warnings.
 All three calendar-policy manifests record
 `forecast_calendar_policy='day_after_history_end_v1'`. Artifact contracts
 reject stale metadata and tuning rejects incompatible baselines. Pandoc
-is installed for report conversion. Git installation via `winget` was
-cancelled at the administrator prompt; Git readiness is not established.
+is installed for report conversion. Publication uses the GitHub website;
+local Git installation is not required for that upload workflow.
 Final visual and report exports have been regenerated and verified against
 the corrected run. Repeat reconciliation after future source or narrative changes.
 
@@ -73,7 +86,7 @@ detail is implemented in `notebooks/` and summarized end-to-end in
 `docs/process_flow.md`. All eight notebooks were executed in the corrected
 local run; the results remain historical, not live-service evidence.
 
-**In summary:** about 1 in 5 eligible past tickets met the configured priority reference. Corrected validation selects XGBoost for one week and ETS for one month, with historical test errors averaging about 5.05 and 4.67 tickets/day, respectively. All eight notebooks executed and 39 tests passed in the clean local submission copy using the existing environment; current-data/business-impact evidence and GitHub publication remain absent.
+**In summary:** about 1 in 5 eligible past tickets met the configured priority reference. Corrected validation selects XGBoost for one week and ETS for one month, with historical test errors averaging about 5.05 and 4.67 tickets/day, respectively. All eight notebooks executed locally; the earlier clean-copy suite passed 39 tests and the expanded local suite passed 52. The repository is public and both lightweight CI jobs passed with documented skips. Current-data and measured business-impact evidence remain absent.
 
 ---
 
@@ -94,8 +107,7 @@ decisions (exact `Ticket` issue type, documented 2016+ window, UTC dates),
 which is why they are analyzed together rather than as two unrelated
 projects. Forecast decision tolerances and the service-level definitions
 used for the SLA workstream still require sign-off from a service owner —
-they are analytical references carried forward from a prior project
-iteration, not an approved policy.
+they are project-configured analytical references, not an approved policy.
 
 **Research acceptance criterion:** after validation-only selection at each
 horizon, require held-out MAE below the same-weekday seasonal baseline at
@@ -266,7 +278,7 @@ unchanged. Reproduce with
 
 ### Retrospective priority-SLA reference assessment
 
-Mapping carried forward from the prior project: `Blocker`/`Highest` →
+Project-configured mapping: `Blocker`/`Highest` →
 Critical (4h), `High` → High (8h), `Medium` → Medium (24h), `Low`/`Lowest` →
 Low (24h); source `unknown` priority is excluded, not defaulted. Duration is
 `issue_resolution_date - issue_created` in elapsed UTC wall-clock hours — not
@@ -587,8 +599,9 @@ corrected CSVs and selection/tuning records before exporting; format
 conversion does not update manually written numbers.
 
 Earlier notebook revalidation notices were removed after all eight notebooks
-executed and artifact/full-suite verification passed. The final suite now
-has 39 passing tests, including two portable fixture cases. Notebook 03/04 explanations and the generator
+executed and artifact/full-suite verification passed. The earlier clean-copy
+suite had 39 passing tests; supplemental evidence tests expanded the local
+suite to 52 passing tests. Notebook 03/04 explanations and the generator
 template now reflect corrected horizon-specific selection and superseded
 invalid-baseline tuning claims.
 Tests require `forecast_calendar_policy='day_after_history_end_v1'`;
@@ -689,14 +702,13 @@ docker run --rm -v ${PWD}\data\raw:/app/data/raw -v ${PWD}\output:/app/output is
   python presentations\run_volume_forecast.py
 ```
 
-The lightweight `test` image intentionally does not install `joblib`,
-`fastapi`, or `mlflow`; the three tests that need them
-(`test_final_model_artifact_is_persisted_and_reproduces_selection`,
-`test_deployment_app_serves_persisted_model_forecast`, and any future
-equivalents) may **skip** in that environment. A lightweight run does not
-validate the full analysis. Docker and GitHub Actions were not executed;
-the final 39-test result is from a clean local submission copy using the
-existing `.venv`, not a container or cloud run.
+The lightweight `test` image does not install the full analysis/API stack,
+and Docker excludes generated output from its build context. Tests needing
+missing dependencies or artifacts therefore skip. In verified CI run #10,
+the image built and ran successfully: 52 tests discovered, 33 passed and
+19 skipped. The preceding Python job discovered 52, with 44 passed and
+8 skipped. This verifies the lightweight test image, not execution of the
+full `analysis` target, raw-data notebook reproduction or containerized API serving.
 
 ### 7.6 Run the full test suite
 
@@ -704,15 +716,20 @@ existing `.venv`, not a container or cloud run.
 python -m unittest discover -s tests -v
 ```
 
-The final suite passed **39/39 tests in a clean LOCAL submission copy**
-using the existing `.venv`. Two portable fixture cases were added to the
-suite. The copy omitted raw CSV, `mlflow.db`, and editor/cache/archive
+The earlier suite passed **39/39 tests in a clean LOCAL submission copy**
+using the existing `.venv`. The copy omitted raw CSV, `mlflow.db`, and editor/cache/archive
 folders; it was not a Git clone or a new dependency environment.
 All eight notebooks had already executed with the real kernel and source
 data in the working project. Final tests include calendar-policy artifact
 contracts and API checks with the persisted model, not only estimator
 doubles. This is local package validation, not Docker/cloud CI or a
 raw-data rerun inside the submission copy.
+
+After supplemental source, sensitivity and ETS diagnostics were added,
+the expanded local suite passed **52 tests without skips**. Separately,
+GitHub Actions run #10 passed its Python and Docker jobs with the skip
+counts reported above. Passing lightweight CI must not be described as
+52 executed tests passing in each job or full analytical reproduction.
 
 ---
 
@@ -739,12 +756,11 @@ technical/business decks contain **12/10 slides**, respectively, with no
 off-slide shapes. Final report DOCX and PDF have been regenerated from
 the corrected source using installed Pandoc and an isolated Edge profile,
 reflecting the XGBoost 7-day/ETS 30-day results. Final
-visual/instructor review and publication remain separate from the
+visual/instructor review remains separate from the
 successful analysis/test run.
 
-All active presentation files are under root `presentations`. The superseded
-archived deck, obsolete classifier artifacts and unused sample/legacy Python
-files have been removed. Current analysis outputs, the virtual environment,
+All active presentation files are under root `presentations`.
+Current analysis outputs, the virtual environment,
 caches and local MLflow records are retained.
 
 ---
@@ -755,8 +771,7 @@ The local workspace is organized as a reusable pipeline: eight
 sequentially-runnable notebooks, a shared `src/issues_capstone.py` module,
 `configs/project_config.yaml`, full `requirements.txt` and pinned lightweight
 `requirements-test.txt` dependencies, a Docker `test`/`analysis` multi-stage build,
-a GitHub Actions CI workflow, and this report. Raw data is excluded from Git
-throughout.
+a GitHub Actions CI workflow, and this report. 
 
 **Source identity verified; coverage and mirror licensing still open:**
 local bytes match the downloaded Kaggle v1 file and Mendeley v2's published
@@ -765,14 +780,23 @@ resolved by identity. The Kaggle CC0 label conflicts with original CC BY 4.0;
 retain the original attribution and license. Keep raw data excluded and
 review derived content, third-party rights and privacy.
 
-**Outstanding:** this project has not yet been published to a public GitHub
-repository from this workspace. No public repository URL or public upload
-has been established. Corrected local validation is complete, but final
-instructor/content review and publication review
-remain. Git installation via `winget` was cancelled at the administrator
-prompt; no `.git`, remote or publication was created. No Docker CLI is
-available, so container execution is unverified. Neither Git readiness
-nor a GitHub Actions run is claimed.
+**Published repository:**
+https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone
+
+**Verified CI evidence:** [run #10](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36751513094)
+completed successfully on 30 September 2026 UTC (1 October locally), for
+commit `f02b76854f8d27fed5d37b92ed032d6362088399` on `master`.
+The Python job passed 44 tests with 8 skipped; the Docker job built the
+lightweight image and passed 33 tests with 19 skipped. Both discovered
+52 tests and reported no failures. This evidence applies to that commit;
+later uploads should be checked against their own Actions runs.
+
+**Remaining scope:** full-analysis reproduction in a fresh dependency
+environment, the full Docker analysis target, containerized API serving,
+current-data evaluation and instructor approval are not established.
+No local Docker installation is claimed; the successful container run
+occurred on GitHub's runner. This corrected report and its refreshed
+exports must be uploaded to replace the previous published report versions.
 
 ---
 
@@ -798,7 +822,7 @@ Before any real-world application:
    `Done`-eligibility rule, and elapsed-duration clock definition, if this
    analysis is ever handed to a real help desk team. There is no external
    service owner for this academic capstone, so the mapping is used as a
-   stated, inherited assumption throughout this report rather than
+   stated analytical assumption throughout this report rather than
    verified policy.
 3. Re-run the selected forecast method on current, representative data and a
    genuinely future holdout, with horizon-specific tolerances agreed in
@@ -857,8 +881,10 @@ series, four compared model families, and a persisted, tracked historical
 artifact and a local serving POC. Corrected validation selects XGBoost at
 7 days and ETS at 30 days; both selected models have lower aggregate test
 MAE than the seasonal baseline. ETS's lower 7-day test error does not
-override validation-only selection. All eight notebooks executed and 39
-tests passed in the clean local submission copy using the existing `.venv`;
+override validation-only selection. All eight notebooks executed, the earlier
+clean local submission copy passed 39 tests, and the expanded local suite
+passed 52 without skips. Both lightweight GitHub Actions jobs also passed,
+with their skips disclosed in §9;
 both `TestClient` and actual localhost HTTP checks
 passed. The temporary server was stopped; this is not a hosted deployment.
 
@@ -869,15 +895,17 @@ passed. The temporary server was stopped; this is not a hosted deployment.
    deck/poster exports are also regenerated and deck shape-bound checks passed.
 2. Preserve the verified source-identity evidence, resolve the mirror license
    label and provider coverage questions, review permitted publication
-   contents and obtain visual/instructor review before submission. Public
-   repository publication is not complete (§9).
+   contents and obtain visual/instructor review before submission. Upload
+   this corrected report and its exports to the published repository,
+   then confirm the new commit's CI result (§9).
 3. Obtain service-owner sign-off and current data before pursuing the
    proposed human-reviewed business pilot; do not claim realized ROI (§1, §10).
 
 **Conclusion:** a corrected, locally reproduced historical forecasting
-prototype and retrospective SLA-reference analysis, with all 39 tests
-passing in the clean local submission copy using the existing environment.
-Publication and instructor review are not complete; final exports have been regenerated.
+prototype and retrospective SLA-reference analysis, with 52 passing tests
+in the expanded local suite and a public repository with successful
+lightweight Python/Docker CI. Instructor review and full fresh-environment
+analysis reproduction remain outstanding; final exports have been regenerated.
 Historical validation is not current operational, capacity-allocation or
 contractual SLA-compliance validation.
 
@@ -889,17 +917,18 @@ The table below summarizes
 `output/issue_helpdesk/capstone_completion_review.md`, the project's living
 self-review. Corrected local validation and exports are complete; source
 identity and supplemental diagnostics are evidenced. Provider completeness,
-mirror-license resolution, instructor review and publication remain separate.
+mirror-license resolution and instructor review remain separate. The
+publication/CI entries below reflect verified run #10, not instructor grading.
 
 | Rubric area | Current evidence | Status / remaining gap |
 |---|---|---|
 | **1. Problem understanding & framing (10)** | Two explicit workstreams; research baseline-advantage criterion and proposed measurable business pilot target distinguished in §1. | **Academic framing evidenced.** Owner approval and measured impact are operational gates, not automatic academic deductions unless required by a rubric descriptor or claim. |
 | **2. Data collection & understanding (10)** | Source profiling plus direct Kaggle v1 byte equality and official Mendeley v2 digest/size match; CC BY 4.0 cited. | **Identity verified.** Provider date-range/completeness questions and conflicting Kaggle CC0 label remain open; privacy review is still required. |
 | **3. Preprocessing, EDA & feature engineering (10)** | Scoped cohort, UTC rules, past-only features, training-only MI/PCA and causal missing-date sensitivity. | **Evidence strengthened.** Zero-date completeness remains unknown; 7-day validation ranking changes when zero-record targets are excluded. Canonical selection is unchanged. |
-| **4. Model implementation & comparison (20)** | Corrected four-candidate comparisons, intervals/tuning, persisted primary ETS, MLflow and API checks; eight notebooks executed and 39 tests passed in a clean local submission copy using the existing environment. | **Met as a historical prototype.** XGBoost selected at 7 days; ETS at 30 days. Tuning ties baseline, not an improvement or general optimum. No current-data validation; not a Git clone or Docker/cloud CI run. |
+| **4. Model implementation & comparison (20)** | Corrected four-candidate comparisons, intervals/tuning, primary ETS, MLflow and local API checks; eight notebooks executed locally, 52 local tests passed, and lightweight Python/Docker CI passed with skips. | **Met as a historical prototype.** XGBoost selected at 7 days; ETS at 30 days. No current-data validation or full-analysis reproduction in a fresh environment is established. |
 | **5. Critical thinking, ethical AI & bias auditing (20)** | XGBoost explanations plus direct ETS state/residual diagnostics, sensitivity findings, Wilson intervals, operational-group audit and safeguards. | **Scope-limited evidence, not fairness certification.** Missing demographics/ROI/production are not automatic academic failures; explicit rubric requirements still apply (§10). Residual dependence and interval undercoverage are disclosed. |
 | **6. Final presentation & communication (10)** | Corrected report/narrative and regenerated deck/poster exports; canonical technical/business decks have 12/10 slides, no off-slide shapes and no stale warnings. | **DOCX/PDF regenerated from corrected source.** Instructor review remains outstanding; instructor approval is not claimed. |
-| **7. GitHub profile & upload (15)** | Local organization, notebooks, configuration, pipeline, tests, Docker/CI definitions, setup guide, POC and report; raw data excluded. | **Not met; not published.** No public URL/upload. Git installation cancelled at admin prompt; Git readiness, content/license-label review and publication remain open. |
+| **7. GitHub profile & upload (15)** | Public repository with notebooks, source, configuration, deliverables, tests and successful Python/Docker CI run #10; raw data excluded. | **Published; lightweight CI verified.** Upload these refreshed report files and check the resulting run. Profile quality and marks remain subject to instructor assessment; publication is not automatic full credit. |
 | **Bonus (5)** | Corrected historical time-series work, PCA/selection, MLflow, locally tested API and dual-audience decks. | **Possible, not assured.** Depends on final demonstration, presentation quality and evaluator judgment. |
 
 ### Corrected historical headline results

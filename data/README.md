@@ -1,5 +1,11 @@
 # Project data
 
+> **Repository update, 1 October 2026:** publication links refer to the new
+> `Heldpdesk_SLA_VolForecast_AIM_capstone` repository. Run #17 below is historical
+> evidence from the previous repository. The new repository's
+> [run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
+> passed before this synchronized update; check the new run after uploading it.
+
 **In summary:** this folder holds the one raw data file the whole project is built on, a list of help desk tickets, and explains what we do and do not know about where it came from. We only analyze the part of the file that matches its documented time period, and we are upfront that a few details, like whether every single day is fully represented, still need confirmation from the data provider.
 
 ## Primary source
@@ -33,7 +39,7 @@ The [missing-date sensitivity evidence](../output/issue_helpdesk/volume_forecast
 
 ## Priority-based retrospective reference assessment
 
-The analysis carries forward the prior project's configured thresholds with an explicit mapping: `Blocker`/`Highest` → Critical (4h), `High` → High (8h), `Medium` → Medium (24h), `Low`/`Lowest` → Low (24h), and `unknown` excluded. The primary cohort also requires resolution outcome `Done`, a mapped priority, and valid nonnegative duration. Duration is computed as `issue_resolution_date - issue_created` in elapsed UTC wall-clock hours.
+The analysis uses project-configured thresholds with an explicit mapping: `Blocker`/`Highest` → Critical (4h), `High` → High (8h), `Medium` → Medium (24h), `Low`/`Lowest` → Low (24h), and `unknown` excluded. The primary cohort also requires resolution outcome `Done`, a mapped priority, and valid nonnegative duration. Duration is computed as `issue_resolution_date - issue_created` in elapsed UTC wall-clock hours.
 
 This duration is not verified to follow a business-hours calendar, pause rules, or the service's actual SLA clock. The mapping and thresholds are not policy-validated. The `wf_total_time` field is a workflow-derived diagnostic, not a substitute SLA duration. The historical comparison currently includes 16,735 records, with 3,333 meeting the configured references. This is not contractual compliance evidence.
 
@@ -75,10 +81,12 @@ narrower than, the 58-field raw source table above.
 
 ## Outputs
 
-The local API was also verified over actual localhost HTTP: health OK, seven dated points from the single persisted ETS artifact starting 2023-03-15, and HTTP 422 for an invalid horizon. The temporary server was stopped. This is not a live data feed or current-demand validation. No Docker CLI is available; no `.git`, remote or publication was created after Git installation was cancelled at the administrator prompt.
+The local API was also verified over actual localhost HTTP: health OK, seven dated points from the single persisted ETS artifact starting 2023-03-15, and HTTP 422 for an invalid horizon. The temporary server was stopped. This is not a live data feed or current-demand validation. The project is [published on GitHub](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone); browser-based publication does not require a local Git installation.
 
-**Result status:** all eight notebooks completed using the actual `.venv` kernel after the calendar correction. Final checks passed 39/39 tests in a clean LOCAL submission copy using the existing `.venv`, without raw CSV, `mlflow.db`, or editor/cache/archive folders. This verifies packaged artifacts, not a raw-data rerun in the copy, Git clone, new environment or Docker/cloud CI run. All three manifests use `forecast_calendar_policy='day_after_history_end_v1'`. Validation selects XGBoost at 7 days and ETS at 30 days, never by test rank. These are corrected historical results, not current-service evidence or proof of source completeness. GitHub publication remains outstanding.
+**Result status:** all eight notebooks completed using the actual `.venv` kernel after the calendar correction. Earlier checks passed 39/39 tests in a clean LOCAL submission copy using the existing `.venv`, without raw CSV, `mlflow.db`, or editor/cache/archive folders. That copy verified packaged artifacts, not a raw-data rerun, Git clone, new environment or Docker/cloud CI run. The expanded local suite subsequently passed 52 tests without skips. All three manifests use `forecast_calendar_policy='day_after_history_end_v1'`. Validation selects XGBoost at 7 days and ETS at 30 days, never by test rank. These are corrected historical results, not current-service evidence or proof of source completeness.
 
-Aggregated, reproducible outputs are written to the canonical `output/issue_helpdesk/` folder (see `output/README.md`). `dataset_manifest.json`, `source_quality_summary.csv`, `daily_coverage_audit.csv`, `data_dictionary.csv`, and `resolution_duration_audit.csv` document scope, assumptions and quality. Forecast predictions and metrics are in `output/issue_helpdesk/volume_forecast/`. No row-level export with raw reporter, assignee or project identifiers is required for the capstone reports. Unused legacy extracts from the prior classifier project have been removed.
+**Verified cloud CI:** [run #17](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36759133985) passed both Python and lightweight Docker test jobs at commit `10d97a12af4d180987aba3d64fb9e7ddd4e83789`, verified on 1 October 2026 (UTC+08:00). Lightweight CI includes skipped tests; it does not mean all 52 tests executed and passed in each job. Docker ran on GitHub's runner, not locally. Full raw-data analysis reproduction in a fresh dependency environment, the full Docker `analysis` target and containerized API serving remain unverified. Check subsequent uploads against their own Actions runs.
+
+Aggregated, reproducible outputs are written to the canonical `output/issue_helpdesk/` folder (see `output/README.md`). `dataset_manifest.json`, `source_quality_summary.csv`, `daily_coverage_audit.csv`, `data_dictionary.csv`, and `resolution_duration_audit.csv` document scope, assumptions and quality. Forecast predictions and metrics are in `output/issue_helpdesk/volume_forecast/`. No row-level export with raw reporter, assignee or project identifiers is required for the capstone reports.
 
 File identity is verified; real-world generalization still requires complete coverage, approved SLA definitions and current-period performance evidence.

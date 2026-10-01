@@ -42,6 +42,8 @@ class ReportExportTests(unittest.TestCase):
             ):
                 report.build_pdf("pandoc", "browser")
             self.assertEqual(pdf.read_bytes(), b"%PDF-new")
+            self.assertIn("--metadata=pagetitle:Final Capstone Report", calls[0])
+            self.assertNotIn("--metadata=title:Final Capstone Report", calls[0])
             self.assertTrue(any(arg.startswith("--user-data-dir=") for arg in calls[1]))
             self.assertFalse(html.exists())
 

@@ -1,12 +1,16 @@
-# Help Desk Ticket SLA and Volume Forecasting
+# Helpdesk Ticket SLA and Volume Forecasting
 
-**Ana Jane Bitor**  
-Postgraduate Diploma in Artificial Intelligence and Machine Learning  
-Capstone Project, 2026
+> **Repository update, 1 October 2026:** this submission is now hosted at
+> [Heldpdesk_SLA_VolForecast_AIM_capstone](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone).
+> [New-repository run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
+> passed at commit `744b0770a5426dbee5be86a657aed44127057d75`, before this synchronized update.
+> Runs #10, #15, #17 and #30 cited below or in supporting documents are historical
+> evidence from the previous repository, not runs in this one.
+> The synchronized files need their own successful CI run after upload.
 
 This is the **main GitHub submission README**. It introduces the research, explains how to reproduce it, and links to the final deliverables. The [data README](data/README.md), [presentations README](presentations/README.md), and [output README](output/README.md) provide supporting detail.
 
-> **Validation status:** all eight notebooks completed with the actual project `.venv` kernel after the recursive-calendar correction. The final suite passed **39/39 tests in a clean LOCAL submission copy**, using the existing `.venv`, without the raw CSV, `mlflow.db`, or editor/cache/archive folders. Validation selects **XGBoost at 7 days** and **ETS at the primary 30-day horizon**. The actual localhost HTTP demonstration also passed. These are historical results, not operational validation.
+> **Validation status:** all eight notebooks completed with the actual project `.venv` kernel after the recursive-calendar correction. The earlier suite passed **39/39 tests in a clean LOCAL submission copy**, using the existing `.venv`, without the raw CSV, `mlflow.db`, or editor/cache/archive folders. The expanded local suite subsequently passed **52 tests without skips**. The repository is public, and [GitHub Actions run #15](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36758018074) passed both the Python and lightweight Docker test jobs. Lightweight CI includes skipped tests and does not establish full-analysis reproduction in a fresh dependency environment. Validation selects **XGBoost at 7 days** and **ETS at the primary 30-day horizon**. The actual localhost HTTP demonstration also passed. These are historical results, not operational validation.
 
  **Responsible-use boundary:** this is an academic research prototype based on historical data ending **14 March 2023**. It is not a live SLA-compliance system, a validated staffing tool, or evidence of current help-desk performance. Source identity is now verified against public release evidence; daily completeness, the source date-range discrepancy and service-policy assumptions remain unresolved.
 
@@ -158,7 +162,7 @@ requirements-test.txt              Pinned lightweight test dependencies
 requirements-report.txt            Report-export system prerequisites
 ```
 
-`mlflow.db` and `mlruns` are regenerable, gitignored local tracking stores. Obsolete artifacts from the earlier `helpdesk_tickets.csv` classifier project have been removed; the current capstone uses `issues.csv`.
+`mlflow.db` and `mlruns` are regenerable, gitignored local tracking stores. The capstone uses `issues.csv`.
 
 ## Methodology
 
@@ -174,7 +178,7 @@ Eligibility requires exact `Ticket` type, the documented 2016+ window, resolutio
 | Low / Lowest | Low | 24 hours | 72 / 304 | 23.7% |
 | **Overall** | | | **3,333 / 16,735** | **19.92%** |
 
-Unknown priorities are excluded, not mapped to a default. The clock is **elapsed UTC wall-clock time**, not a verified business-hours or pause-adjusted SLA clock. Thresholds are inherited project references, not approved contractual policy. Workflow duration fields remain diagnostics rather than substitutes for the resolution clock.
+Unknown priorities are excluded, not mapped to a default. The clock is **elapsed UTC wall-clock time**, not a verified business-hours or pause-adjusted SLA clock. Thresholds are project-configured references, not approved contractual policy. Workflow duration fields remain diagnostics rather than substitutes for the resolution clock.
 
 ### Forecast preprocessing and evaluation design
 
@@ -283,7 +287,7 @@ The [monitoring guide](docs/deployment_monitoring.md) describes pilot gates and 
 
 Commands below use **Windows PowerShell from the project root**, unless noted. Use Python **3.12**, matching the Docker/CI target. Python 3.14-generated pickle artifacts may not load under 3.12; regenerate the model in the environment that will serve it.
 
-1. Download or clone your submitted GitHub repository and open its root directory. No public repository URL is assumed here.
+1. Download or clone the [published GitHub repository](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone) and open its root directory. For a browser download, choose **Code > Download ZIP** and extract it first.
 2. Create a virtual environment and install the full analysis dependencies:
 
    ```powershell
@@ -309,7 +313,7 @@ The commands use the environment's executable directly; activation and PowerShel
 ## Downloading the dataset
 
 1. Open the [Kaggle listing](https://www.kaggle.com/datasets/janebitor/help-desk-tickets-mendeley-data) or the [original Mendeley version-2 release](https://data.mendeley.com/datasets/btm76zndnt/2). Review its description, attribution and reuse terms; Kaggle may require sign-in.
-2. Download/extract the release. Locate `issues.csv`, not `issues_snapshots.csv` or the older project's `helpdesk_tickets.csv`.
+2. Download/extract the release. Locate `issues.csv`, not `issues_snapshots.csv`.
 3. Create `data\raw` if necessary and place the CSV at **`data\raw\issues.csv`**. Keep the original unchanged. Preserve downloaded `FEATURES.md` and `EXAMPLE.md` for source interpretation without publishing material you are not authorized to redistribute.
 4. Compare the local checksum with the recorded working-extract manifest:
 
@@ -332,7 +336,7 @@ Do not commit `data\raw\issues.csv`. `.gitignore` and `.dockerignore` exclude ra
 
 ## Reproducing the analysis
 
-**Completed local reproduction:** all eight notebooks ran successfully in the actual `.venv` kernel. Final portability checks passed 39/39 tests in a clean local submission copy using that existing environment, without raw CSV, `mlflow.db`, or editor/cache/archive folders. This checks the packaged artifacts without rerunning the raw-data analysis in that copy; it is not a Git clone or isolated environment/Docker/cloud CI run.
+**Completed local reproduction:** all eight notebooks ran successfully in the actual `.venv` kernel. Earlier portability checks passed 39/39 tests in a clean local submission copy using that existing environment, without raw CSV, `mlflow.db`, or editor/cache/archive folders. That copy checked packaged artifacts without rerunning the raw-data analysis; it was not a Git clone or isolated environment/Docker/cloud CI run. The expanded local suite subsequently passed 52 tests without skips. Separately, lightweight Python and Docker cloud CI passed; full raw-data analysis reproduction in a fresh dependency environment remains unverified.
 
 Run the notebooks **01–08 in order**, using the registered project kernel. Execution regenerates analysis artifacts and can overwrite earlier results. Preserve any results you need to compare first.
 
@@ -503,13 +507,15 @@ Before submission, also open each deck, poster and exported report for visual re
 | Rubric evidence/self-review | [Capstone completion review](output/issue_helpdesk/capstone_completion_review.md) |
 | Demonstration instructions | [Demonstration](#demonstration); no hosted service or recording is claimed |
 
-The repository URL must be the actual GitHub location used for submission. This README does not claim that the local project has already been published or that all instructor requirements have been signed off. Publish only approved material; a verified public dataset license does not authorize sharing unrelated local files.
+The project is published at https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone. Local validation passed 52 tests without skips, and lightweight Python/Docker cloud CI passed with skips. Publication does not establish instructor approval or full fresh-environment analysis reproduction. Publish only approved material; a verified public dataset license does not authorize sharing unrelated local files.
 
 ## Dockerized deployment and MLOps POC
 
 The local FastAPI POC passed both the full suite's `TestClient` checks and an **actual localhost HTTP demonstration**: health returned OK, `horizon_days=7` returned seven dated points starting **2023-03-15** from the single persisted ETS artifact, and an invalid horizon returned **422**. The temporary server was stopped afterward; no running or hosted endpoint is claimed.
 
-**Environment/publication limits:** no Docker CLI is available, so Docker was not executed; GitHub Actions was not run. Git installation was cancelled at the administrator prompt, and no `.git`, remote or public repository was created.
+**Verified publication and CI:** [GitHub Actions run #15](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36758018074) passed both the Python and lightweight Docker test jobs at commit `fb4886f6dfc4c017601b6efe3ec0659fdd683915`, verified on 1 October 2026 (UTC+08:00). Docker built and ran the test image on GitHub's runner; no local Docker execution is claimed. The lightweight workflow includes skipped tests where dependencies or artifacts are absent, so a successful run must not be described as all 52 tests executing and passing in each job. This evidence applies to that commit; check subsequent uploads against their own Actions runs.
+
+**Remaining environment limits:** full raw-data analysis reproduction in a fresh dependency environment, the full Docker `analysis` target, and containerized API serving remain unverified. Publication through the GitHub website does not require a local Git installation. The localhost API demonstration is not a hosted or production deployment.
 
 ### Container targets
 
@@ -600,10 +606,6 @@ Development assistance is separate from model scope. GitHub Copilot has assisted
 
 ## Author
 
-**Ana Jane Bitor**  
-**Postgraduate Diploma in Artificial Intelligence and Machine Learning**  
-**Capstone Project, 2026**
-
 ## Acknowledgment and citation
 
 The author acknowledges the original dataset contributor, the source help-desk organization, and the Mendeley Data and Kaggle platforms for making this research resource discoverable. The original source's performance-appraisal study is distinct from this capstone's forecasting/reference-analysis task; the source creator does not endorse this project's conclusions.
@@ -616,6 +618,6 @@ The [version-2 landing page](https://data.mendeley.com/datasets/btm76zndnt/2) li
 
 **Additional dataset listing used by this project:** [Help Desk Tickets (Mendeley Data), Kaggle](https://www.kaggle.com/datasets/janebitor/help-desk-tickets-mendeley-data).
 
-Retain original attribution and indicate transformations when sharing permitted derivatives. The analysis filters the source, aggregates arrivals by UTC day, and creates derived features and reference comparisons. The [source verification](data/source_verification.json) now establishes local equality to the downloaded Kaggle v1 member and agreement with the Mendeley v2 digest/size. This resolves file identity, not the source date-range discrepancy, completeness, privacy review or the conflicting Kaggle CC0 label.
+Retain original attribution and indicate transformations when sharing permitted derivatives. The analysis filters the source, aggregates arrivals by UTC day, and creates derived features and reference comparisons. The [source verification](data/source_verification.json) establishes local equality to the downloaded Kaggle v1 member and agreement with the Mendeley v2 digest/size. This resolves file identity, not the source date-range discrepancy, completeness, privacy review or the conflicting Kaggle CC0 label.
 
 The project also acknowledges the open-source Python ecosystem used for data analysis, statistical modeling, machine learning, explainability, notebook execution, visualization, API serving and experiment tracking. Dependencies are listed in [requirements.txt](requirements.txt).
