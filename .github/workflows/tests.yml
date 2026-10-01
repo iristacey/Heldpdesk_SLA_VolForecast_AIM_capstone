@@ -1,4 +1,4 @@
-name: Project contract tests
+﻿name: Project contract tests
 
 on:
   push:
