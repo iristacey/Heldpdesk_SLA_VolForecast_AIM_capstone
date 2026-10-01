@@ -34,11 +34,11 @@ jobs:
 
       - name: Lint Python files
         run: |
-          ruff check src tests --select E9,F63,F7,F82 --output-format=github
+          ruff check . --output-format=github
 
       - name: Run unit tests
         run: |
-          pytest -q --maxfail=1 --disable-warnings --cov=. --cov-report=term-missing
+          python -m pytest -q tests --maxfail=1 --disable-warnings --cov=src --cov-report=term-missing
 
       - name: Validate notebooks can be parsed (fast check)
         run: |
