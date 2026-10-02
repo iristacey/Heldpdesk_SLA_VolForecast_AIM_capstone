@@ -1,10 +1,5 @@
 # Project data
 
-> **Repository update, 1 October 2026:** publication links refer to the new
-> `Heldpdesk_SLA_VolForecast_AIM_capstone` repository. Run #17 was historical
-> evidence from the previous repository. The new repository's
-> [run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
-> passed before this synchronized update; check the new run after uploading it.
 
 **In summary:** this folder holds the one raw data file the whole project is built on, a list of help desk tickets, and explains what we do and do not know about where it came from. We only analyze the part of the file that matches its documented time period, and we are upfront that a few details, like whether every single day is fully represented, still need confirmation from the data provider.
 
