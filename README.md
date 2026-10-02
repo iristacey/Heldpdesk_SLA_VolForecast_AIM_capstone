@@ -1,13 +1,5 @@
 # Helpdesk Ticket SLA and Volume Forecasting
 
-> **Repository update, 1 October 2026:** this submission is now hosted at
-> [Heldpdesk_SLA_VolForecast_AIM_capstone](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone).
-> [New-repository run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
-> passed at commit `744b0770a5426dbee5be86a657aed44127057d75`, before this synchronized update.
-> Runs #10, #15, #17 and #30 cited in supporting documents are historical
-> evidence from the previous repository, not runs in this one.
-> The synchronized files need their own successful CI run after upload.
-
 This is the **main GitHub submission README**. It introduces the research, explains how to reproduce it, and links to the final deliverables. The [data README](data/README.md), [presentations README](presentations/README.md), and [output README](output/README.md) provide supporting detail.
 
 > **Validation status:** all eight notebooks completed with the actual project `.venv` kernel after the recursive-calendar correction. The earlier suite passed **39/39 tests in a clean LOCAL submission copy**, using the existing `.venv`, without the raw CSV, `mlflow.db`, or editor/cache/archive folders. The expanded local suite subsequently passed **52 tests without skips**. The repository is now public at [Heldpdesk_SLA_VolForecast_AIM_capstone](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone), and [the new repository's run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719) passed at commit `744b0770a5426dbee5be86a657aed44127057d75`. Lightweight CI includes skipped tests and does not establish full-analysis reproduction in a fresh dependency environment. Validation selects **XGBoost at 7 days** and **ETS at the primary 30-day horizon**. The actual localhost HTTP demonstration also passed. These are historical results, not operational validation.
