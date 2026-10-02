@@ -4,13 +4,13 @@
 > [Heldpdesk_SLA_VolForecast_AIM_capstone](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone).
 > [New-repository run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
 > passed at commit `744b0770a5426dbee5be86a657aed44127057d75`, before this synchronized update.
-> Runs #10, #15, #17 and #30 cited below or in supporting documents are historical
+> Runs #10, #15, #17 and #30 cited in supporting documents are historical
 > evidence from the previous repository, not runs in this one.
 > The synchronized files need their own successful CI run after upload.
 
 This is the **main GitHub submission README**. It introduces the research, explains how to reproduce it, and links to the final deliverables. The [data README](data/README.md), [presentations README](presentations/README.md), and [output README](output/README.md) provide supporting detail.
 
-> **Validation status:** all eight notebooks completed with the actual project `.venv` kernel after the recursive-calendar correction. The earlier suite passed **39/39 tests in a clean LOCAL submission copy**, using the existing `.venv`, without the raw CSV, `mlflow.db`, or editor/cache/archive folders. The expanded local suite subsequently passed **52 tests without skips**. The repository is public, and [GitHub Actions run #15](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36758018074) passed both the Python and lightweight Docker test jobs. Lightweight CI includes skipped tests and does not establish full-analysis reproduction in a fresh dependency environment. Validation selects **XGBoost at 7 days** and **ETS at the primary 30-day horizon**. The actual localhost HTTP demonstration also passed. These are historical results, not operational validation.
+> **Validation status:** all eight notebooks completed with the actual project `.venv` kernel after the recursive-calendar correction. The earlier suite passed **39/39 tests in a clean LOCAL submission copy**, using the existing `.venv`, without the raw CSV, `mlflow.db`, or editor/cache/archive folders. The expanded local suite subsequently passed **52 tests without skips**. The repository is now public at [Heldpdesk_SLA_VolForecast_AIM_capstone](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone), and [the new repository's run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719) passed at commit `744b0770a5426dbee5be86a657aed44127057d75`. Lightweight CI includes skipped tests and does not establish full-analysis reproduction in a fresh dependency environment. Validation selects **XGBoost at 7 days** and **ETS at the primary 30-day horizon**. The actual localhost HTTP demonstration also passed. These are historical results, not operational validation.
 
  **Responsible-use boundary:** this is an academic research prototype based on historical data ending **14 March 2023**. It is not a live SLA-compliance system, a validated staffing tool, or evidence of current help-desk performance. Source identity is now verified against public release evidence; daily completeness, the source date-range discrepancy and service-policy assumptions remain unresolved.
 
@@ -38,7 +38,7 @@ This is the **main GitHub submission README**. It introduces the research, expla
 
 Helpdesk planning requires both an understanding of past service outcomes and an estimate of future demand. This project joins two complementary workstreams: retrospectively compare completed tickets against priority-based resolution-time references, and forecast daily ticket arrivals over separate 7- and 30-day horizons.
 
-The intended audience is service managers and capacity planners, supported by technical reviewers who need traceable data preparation, model comparisons and limitations. The project demonstrates an analytical workflow; it does not demonstrate that using its forecasts improves staffing costs or service outcomes.
+The intended audience are service managers and workforce/capacity planners, supported by technical reviewers who need traceable data preparation, model comparisons and limitations. Forecasting helps in identifying staffing requirements to address volume and demand, and retrospective review of performance surfaces opportunities to improve service based on SLA attainment. The project demonstrates an analytical workflow; it does not demonstrate that using its forecasts improves staffing costs or service outcomes.
 
 ### Objectives
 
@@ -513,7 +513,7 @@ The project is published at https://github.com/iristacey/Heldpdesk_SLA_VolForeca
 
 The local FastAPI POC passed both the full suite's `TestClient` checks and an **actual localhost HTTP demonstration**: health returned OK, `horizon_days=7` returned seven dated points starting **2023-03-15** from the single persisted ETS artifact, and an invalid horizon returned **422**. The temporary server was stopped afterward; no running or hosted endpoint is claimed.
 
-**Verified publication and CI:** [GitHub Actions run #15](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36758018074) passed both the Python and lightweight Docker test jobs at commit `fb4886f6dfc4c017601b6efe3ec0659fdd683915`, verified on 1 October 2026 (UTC+08:00). Docker built and ran the test image on GitHub's runner; no local Docker execution is claimed. The lightweight workflow includes skipped tests where dependencies or artifacts are absent, so a successful run must not be described as all 52 tests executing and passing in each job. This evidence applies to that commit; check subsequent uploads against their own Actions runs.
+**Verified publication and CI:** [Heldpdesk_SLA_VolForecast_AIM_capstone run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719) passed at commit `744b0770a5426dbee5be86a657aed44127057d75`, verified on 1 October 2026 (UTC+08:00). Docker built and ran the test image on GitHub's runner; no local Docker execution is claimed. The lightweight workflow includes skipped tests where dependencies or artifacts are absent, so a successful run must not be described as all 52 tests executing and passing in each job. This evidence applies to that commit; check subsequent uploads against their own Actions runs.
 
 **Remaining environment limits:** full raw-data analysis reproduction in a fresh dependency environment, the full Docker `analysis` target, and containerized API serving remain unverified. Publication through the GitHub website does not require a local Git installation. The localhost API demonstration is not a hosted or production deployment.
 

@@ -2,8 +2,8 @@
 
 > **Repository update, 1 October 2026:** publication links refer to the new
 > `Heldpdesk_SLA_VolForecast_AIM_capstone` repository. Runs #15 and #30 and the
-> downloaded-snapshot check below are historical evidence from the previous
-> repository. The new repository's
+> downloaded-snapshot check below were historical evidence from the previous
+> repository and must not be attributed to the new one. The new repository's
 > [run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
 > passed at commit `744b0770a5426dbee5be86a657aed44127057d75` before this synchronized
 > update. Its passing older tests do not verify the corrected JSON/contract checks;
@@ -11,9 +11,11 @@
 
 **In summary:** this document is a self graded checklist against the course rubric. It lists, area by area, what evidence the project already has and what is still missing or unverified, so a reader can quickly see how complete the work is without re reading every notebook.
 
+**Intended audience:** service managers and workforce/capacity planners, supported by technical reviewers who need traceable data preparation, model comparisons and limitations. Forecasting helps in identifying staffing requirements to address volume and demand, and retrospective review of performance surfaces opportunities to improve service based on SLA attainment. The project demonstrates an analytical workflow; it does not demonstrate that using its forecasts improves staffing costs or service outcomes.
+
 > **Validation status:** all eight notebooks completed with the actual `.venv` kernel after the calendar correction. Earlier checks passed **39/39 tests in a clean LOCAL submission copy** using the existing `.venv`, without raw CSV, `mlflow.db`, or editor/cache/archive folders. That copy was not a Git clone, new environment or Docker/cloud CI run. The expanded local suite subsequently passed **52 tests without skips**. The project is now [published on GitHub](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone), and both lightweight Python and Docker CI jobs passed. Corrected validation selects **XGBoost at 7 days** and **ETS at 30 days**.
 
-**Verified cloud evidence:** [GitHub Actions run #15](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36758018074) passed the Python and lightweight Docker test jobs at commit `fb4886f6dfc4c017601b6efe3ec0659fdd683915`, verified on 1 October 2026 (UTC+08:00). The workflow includes skipped tests where dependencies or artifacts are absent; success is not evidence that all 52 tests executed and passed in each job. Full raw-data analysis reproduction in a fresh dependency environment, the full Docker `analysis` target and containerized API serving remain unverified. Check subsequent uploads against their own Actions runs.
+**Verified cloud evidence:** [Heldpdesk_SLA_VolForecast_AIM_capstone run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719) passed at commit `744b0770a5426dbee5be86a657aed44127057d75`, before this synchronized update. The workflow includes skipped tests where dependencies or artifacts are absent; success is not evidence that all 52 tests executed and passed in each job. Full raw-data analysis reproduction in a fresh dependency environment, the full Docker `analysis` target and containerized API serving remain unverified. Confirm the new repository's own CI run after this update is uploaded.
 
 An actual localhost HTTP demonstration also passed: health OK, seven dated ETS points starting 2023-03-15, and HTTP 422 for an invalid horizon. The temporary server was stopped; this is not a hosted or production deployment. Corrected technical/business decks have 12/10 slides, no off-slide shapes and no stale pre-correction warnings. The Docker test image ran on GitHub's runner; no local Docker execution is claimed.
 
@@ -36,9 +38,11 @@ in-memory daily series exactly matches the saved 2,628-day series, including
 retrospective SLA-reference assessment and daily Ticket-volume forecasting.
 No classifier or alternative source dataset is part of either workstream.
 
-[CI run #30](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36827582947)
+[Previous-repository CI run #30](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36827582947)
 passed Python and lightweight Docker jobs at commit
-`96136788fa09e20f6a7ca99e0904dd24f32a0811`. A downloaded copy of that exact commit
+`96136788fa09e20f6a7ca99e0904dd24f32a0811`. This is historical evidence from the
+prior repository, not the new `Heldpdesk_SLA_VolForecast_AIM_capstone` location.
+A downloaded copy of that exact commit
 also passed all 52 tests without skips using the existing project interpreter,
 without raw CSV, a copied virtual environment or local MLflow stores. Actual
 localhost API calls returned correctly dated, finite, nonnegative ETS forecasts
@@ -63,7 +67,7 @@ claiming the published handoff is fully synchronized. See the
 | **2. Data collection & understanding (10)** | 66,691 records, 58-field profile/dictionary, quality checks, direct Kaggle v1 byte comparison and official Mendeley v2 digest/size match. | **Identity verified.** Source date-range discrepancy, completeness and conflicting mirror license label remain unresolved. Matching bytes does not certify privacy safety. |
 | **3. Preprocessing, EDA & feature engineering (10)** | Scoped cohort, UTC rules, past-only features, training-only MI/PCA and causal missing-date sensitivity. | **Evidence strengthened.** 7-day validation ranking changes when zero-record targets are excluded. Completeness remains unknown; no canonical selection is replaced. |
 | **4. Model implementation & comparison (20)** | Corrected comparisons, splits, intervals/tuning, primary ETS, MLflow and API checks; all eight notebooks executed locally, the expanded local suite passed 52 tests without skips, and lightweight Python/Docker cloud CI passed with skips. | **Met as a historical prototype.** XGBoost selected at 7 days; ETS at 30 days. Tuning ties baseline, not an improvement or general optimum. Operational validation and full-analysis reproduction in a fresh dependency environment remain unverified. |
-| **5. Critical thinking, ethical AI & bias auditing (20)** | XGBoost explanations plus direct ETS components/residuals, sensitivity findings, Wilson intervals, operational-group audit and human-review safeguards. | **Scope-limited evidence, not fairness certification.** Missing demographics, ROI and production are not automatic academic failures; explicit rubric requirements still apply. Residual dependence, underprediction and interval undercoverage are disclosed. |
+| **5. Critical thinking, ethical AI & bias auditing (20)** | XGBoost explanations (SHAP, PDP, ICE, LIME) plus direct ETS components/residuals, sensitivity findings, Wilson intervals, operational-group audit, a named-and-justified mitigation-toolkit scope statement and human-review safeguards. | **Scope-limited evidence, not fairness certification.** Missing demographics, ROI and production are not automatic academic failures; explicit rubric requirements still apply. Residual dependence, underprediction and interval undercoverage are disclosed. |
 | **6. Final presentation & communication (10)** | Corrected report/narrative and regenerated deck/poster exports; canonical technical/business decks have 12/10 slides, no off-slide shapes and no stale warnings. | **DOCX/PDF regenerated from corrected source.** Instructor review remains outstanding; instructor approval is not claimed. |
 | **7. GitHub profile & upload (15)** | Public repository with notebooks, configuration, pipeline, tests, Docker/CI workflow, setup guide, POC, reports and presentations; successful lightweight Python/Docker CI run #15. Raw data remains excluded. | **Published; lightweight CI verified.** https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone. Local validation passed 52 tests without skips. Check each new upload's CI result. Publication is not automatic full credit; instructor assessment and mirror-license resolution remain separate. |
 | **Bonus (5)** | Corrected historical time-series work, PCA/selection, MLflow, locally tested API and dual-audience decks. | **Possible, not assured.** Depends on final demonstration, presentation quality and evaluator judgment. |

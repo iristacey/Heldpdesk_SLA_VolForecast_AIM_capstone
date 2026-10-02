@@ -11,8 +11,8 @@ Publication-status update: 1 October 2026 (UTC+08:00)
 > [Heldpdesk_SLA_VolForecast_AIM_capstone](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone).
 > [New-repository run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
 > passed at commit `744b0770a5426dbee5be86a657aed44127057d75` before this synchronized update.
-> Run #10 and its detailed pass/skip counts below are historical evidence from the
-> previous repository. They must not be attributed to the new repository or this
+> Run #10 was historical evidence from the
+> previous repository. It must not be attributed to the new repository or this
 > update. Confirm the new CI result after uploading the synchronized files.
 
 > **Validation status:** all eight notebooks completed with the actual
@@ -25,10 +25,8 @@ Publication-status update: 1 October 2026 (UTC+08:00)
 > The earlier SciPy DLL block no longer reproduces; no policy bypass was used.
 > The expanded local suite subsequently passed **52 tests without skips**.
 > The project is now [published on GitHub](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone).
-> [Verified CI run #10](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36751513094)
-> passed both jobs at commit `f02b76854f8d27fed5d37b92ed032d6362088399`:
-> Python discovered 52 tests, with 44 passing and 8 skipped; the Docker
-> test image discovered 52, with 33 passing and 19 skipped.
+> [New-repository run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
+> passed at commit `744b0770a5426dbee5be86a657aed44127057d75`, before this synchronized update.
 > These lightweight checks do not reproduce the full analysis or deploy the API.
 
 An actual localhost HTTP demonstration also passed: health returned OK,
@@ -64,6 +62,15 @@ across two integrated workstreams:
 2. **Predictive daily ticket-volume forecasting** — comparing one-week and
    one-month-ahead daily-arrival forecasts across four candidate methods for
    capacity-planning research.
+
+**Intended audience:** service managers and workforce/capacity planners,
+supported by technical reviewers who need traceable data preparation, model
+comparisons and limitations. Forecasting helps in identifying staffing
+requirements to address volume and demand, and retrospective review of
+performance surfaces opportunities to improve service based on SLA
+attainment. The project demonstrates an analytical workflow; it does not
+demonstrate that using its forecasts improves staffing costs or service
+outcomes.
 
 The retrospective cohort (16,735 eligible resolved tickets) met its
 configured reference in **19.92%** of cases. Corrected validation selects
@@ -398,7 +405,7 @@ is persisted**.
 
 ---
 
-## 5. Critical thinking, ethical AI, and bias auditing
+## 5. Critical thinking, ethical AI, and bias auditing (Bias & Fairness Analysis)
 
 **Data and method limitations carried through every stage:** the unresolved
 date-range provenance mismatch; the unverified zero-arrival-day completeness
@@ -413,7 +420,30 @@ these diagnostics do not explain every recursive multi-step forecast or
 the primary ETS model. Leading SHAP contributions are lags
 28, 21, and 14 days. Correlated lag features can share importance;
 feature importance/SHAP here describe statistical model behavior, not causal
-real-world demand drivers.
+real-world demand drivers. The same notebook also computes **partial
+dependence (PDP)** for the top three SHAP features (the average marginal
+effect on predicted tickets), **individual conditional expectation (ICE)**
+curves for the single top feature (one line per validation day, so
+feature-interaction effects an average PDP line would mask are visible as
+crossing/diverging lines), and one **LIME** local explanation for a
+representative validation-day forecast. All four methods explain the same
+pre-validation XGBoost challenger fit only.
+
+**Overfitting and class imbalance.** Overfitting risk is controlled
+structurally rather than diagnosed by a single statistic: every model is
+fit on pre-validation history only and scored out-of-sample on
+validation/test dates it never saw, and the bounded hyperparameter
+sensitivity/tuning search re-validates any candidate configuration against
+the honest rolling-origin backtest (not just the cheap one-step proxy)
+before it could be adopted. Class imbalance does not apply in the
+classification sense: the volume forecast is a continuous daily-count
+regression and the SLA retrospective is a descriptive attainment-rate
+comparison, not a trained classifier, so neither has class labels to be
+imbalanced. The nearest analogue — small-sample instability in some
+priority/project/year subgroups — is handled in Notebook 05 with Wilson
+confidence intervals and an explicit `group_stability` flag rather than
+imbalance-correction techniques such as resampling or class weighting,
+which do not apply here.
 
 **Direct primary-model explanation:** the
 [ETS component figure](../volume_forecast/ets_diagnostics/ets_components.png),
@@ -465,6 +495,20 @@ is under-served; if approved operational segments become available in the
 future, signed bias, error, and interval coverage should be audited per
 segment with small-group uncertainty retained, and human capacity-planner
 review should remain in the loop.
+
+**On the standard mitigation toolkit:** reweighting, augmentation,
+per-group thresholds, and post-processing are classification/
+protected-attribute bias-correction techniques and are named here rather
+than silently skipped. Reweighting and augmentation both require the
+protected-group labels this source does not contain; threshold adjustment
+and post-processing both presume a classifier making per-instance
+accept/reject decisions, whereas the production artifact is a
+continuous-valued daily-count regression forecast with no such decision
+threshold. The substituted safeguards are the Wilson-interval
+operational-group audit above, the recommendation to collect governed
+protected-attribute data before any real fairness claim, and mandatory
+human review of forecast-driven staffing decisions in place of automated
+per-group correction.
 
 **Generative-AI scope decision:** no generative/LLM component is used
 anywhere in the analysis, forecast, or deployment path. Notebook 06's
@@ -783,12 +827,9 @@ review derived content, third-party rights and privacy.
 **Published repository:**
 https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone
 
-**Verified CI evidence:** [run #10](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36751513094)
-completed successfully on 30 September 2026 UTC (1 October locally), for
-commit `f02b76854f8d27fed5d37b92ed032d6362088399` on `master`.
-The Python job passed 44 tests with 8 skipped; the Docker job built the
-lightweight image and passed 33 tests with 19 skipped. Both discovered
-52 tests and reported no failures. This evidence applies to that commit;
+**Verified CI evidence:** [Heldpdesk_SLA_VolForecast_AIM_capstone run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
+passed at commit `744b0770a5426dbee5be86a657aed44127057d75`, before this
+synchronized update. This evidence applies to that commit;
 later uploads should be checked against their own Actions runs.
 
 **Remaining scope:** full-analysis reproduction in a fresh dependency

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="SLA &amp; Volume Forecast Capstone">
+  <title>Help Desk Ticket SLA and Volume Forecasting (Technical)</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/white.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Help Desk Ticket SLA and Volume Forecasting</h1>
+  <p class="subtitle">Technical presentation — peer/reviewer deck</p>
+  <p class="author">SLA &amp; Volume Forecast Capstone</p>
+  <p class="date">Historical analysis, 2016–2023</p>
+</section>
+
+<section id="help-desk-ticket-sla-and-volume-forecasting"
+class="slide level1">
+<h1>Help Desk Ticket SLA and Volume Forecasting</h1>
+<p>Technical peer deck — reveal.js / Beamer-style export</p>
+<p><strong>Source of truth:</strong> this deck is a condensed,
+slide-formatted derivative of
+<code>presentations/technical_presentation.md</code>. That narrative
+file (and the existing <code>technical_capstone.pptx</code> deck) are
+unchanged by this export.</p>
+<p>Historical analysis of 27,348 scoped Ticket records, 2016-01-03 to
+2023-03-14 UTC. Evidence boundary: the source ends in March 2023 and
+does not validate current operations.</p>
+</section>
+<section class="slide level1">
+
+<h2 id="1-problem-statement">1. Problem statement</h2>
+<ul>
+<li><strong>Retrospective task:</strong> compare elapsed resolution time
+of completed Ticket records with project-configured priority
+references.</li>
+<li><strong>Predictive task:</strong> forecast daily counts of exact
+<code>Ticket</code>-type issues, separate 7- and 30-day horizons, using
+only past counts and calendar features.</li>
+<li><strong>ML framing:</strong> univariate time-series regression via
+model comparison — seasonal-naive baseline, weekly ETS, XGBoost
+autoregression (28-day lags), MI/PCA-selected Ridge. Supervised
+regression, not classification.</li>
+<li><strong>Research acceptance criterion:</strong> held-out MAE below
+the same-weekday baseline at both horizons — met (5.05 vs 6.41 at 7
+days; 4.67 vs 6.49 at 30 days).</li>
+<li><strong>Proposed business criterion (not
+measured/approved):</strong> ≥10% fewer overtime hours per 100 tickets
+in a human-reviewed pilot, without worsening an owner-approved
+service-attainment rate.</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="2-data-provenance-licensing--structure">2. Data provenance,
+licensing &amp; structure</h2>
+<ul>
+<li>Source: Help Desk Tickets (Mendeley Data v2, CC BY 4.0), mirrored on
+Kaggle under a conflicting CC0 label — original attribution retained,
+mirror-label conflict flagged for resolution.</li>
+<li><code>data/raw/issues.csv</code>: 66,691 rows × 58 fields. Local
+file bytes verified against both the Kaggle mirror and the official
+Mendeley digest.</li>
+<li>Documented scope is 2016–March 2023, but <code>issue_created</code>
+contains dates back to 2007-04-15; pre-2016 rows are profiled and
+excluded from the primary analysis as a disclosed provenance
+caveat.</li>
+<li>Primary cohort: exact <code>issue_type == Ticket</code>, 2016+ →
+<strong>27,348 rows</strong>; 344 of 2,628 calendar days (13.1%) have no
+Ticket rows, filled as zero under an unverified completeness
+assumption.</li>
+<li>Two structures are kept separate: the wide 58-column raw table
+(identity, actors, classification, timestamps, workflow-state fields)
+versus a narrow, purpose-built one-row-per-day forecasting table
+(target, past-only lags, rolling means, cyclical calendar encodings) —
+this separation is what prevents same-day information leakage into the
+forecast features.</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="3-pipeline-workflow">3. Pipeline workflow</h2>
+<ul>
+<li>Eight notebooks run in sequence, each writing to one canonical
+<code>output/issue_helpdesk/</code> folder: data understanding →
+EDA/feature engineering → model training/comparison → explainability
+(SHAP/PDP/ICE/ LIME) → bias/fairness audit → GenAI-scope dashboard
+contract → MLflow deployment/monitoring → business ROI template.</li>
+<li>Downstream deliverables (decks, final report, FastAPI demo) all read
+from that same canonical output folder — one reproducible source of
+truth.</li>
+<li>Dashboard proof of work: a Power BI-ready data contract and folder
+(fact tables, model-comparison table, sample report screenshots) built
+without Power BI Desktop installed locally, substituted with rendered
+dashboard-styled proof images.</li>
+<li>Full function/file-level mapping:
+<code>docs/process_flow.md</code>.</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="4-retrospective-priority-sla-reference-results">4. Retrospective
+priority-SLA reference results</h2>
+<table>
+<thead>
+<tr>
+<th>Mapped priority</th>
+<th style="text-align: right;">Reference</th>
+<th style="text-align: right;">Assessed</th>
+<th style="text-align: right;">Met</th>
+<th style="text-align: right;">Met rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical</td>
+<td style="text-align: right;">4h</td>
+<td style="text-align: right;">2,124</td>
+<td style="text-align: right;">524</td>
+<td style="text-align: right;">24.7%</td>
+</tr>
+<tr>
+<td>High</td>
+<td style="text-align: right;">8h</td>
+<td style="text-align: right;">3,146</td>
+<td style="text-align: right;">576</td>
+<td style="text-align: right;">18.3%</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td style="text-align: right;">24h</td>
+<td style="text-align: right;">11,161</td>
+<td style="text-align: right;">2,161</td>
+<td style="text-align: right;">19.4%</td>
+</tr>
+<tr>
+<td>Low</td>
+<td style="text-align: right;">24h</td>
+<td style="text-align: right;">304</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">23.7%</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>16,735 eligible completed Tickets overall; <strong>3,333 (19.9%) met
+reference</strong> — consistent at roughly 1-in-5 across every priority,
+including Critical.</li>
+<li>Duration is elapsed UTC wall-clock time, not confirmed
+business-hours or pause-adjusted SLA compliance — a service owner must
+validate the clock and mapping before any compliance claim.</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="5-from-issue-events-to-daily-volume">5. From issue events to
+daily volume</h2>
+<ol type="1">
+<li>Parse <code>issue_created</code> (UTC, mixed fractional-second
+formats).</li>
+<li>Restrict to <code>issue_type == Ticket</code>, documented 2016+
+scope.</li>
+<li>Aggregate to one count per calendar day.</li>
+<li>Fill no-row dates as zero, only under the stated completeness
+assumption.</li>
+<li>Engineer past-only lag/rolling-mean/cyclical-calendar features.</li>
+</ol>
+<ul>
+<li>Result: <strong>2,628 daily observations</strong>, averaging 10.4
+tickets/day, 344 assumed zero-arrival days, counts ranging 0–88.</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="6-forecast-experiment-design">6. Forecast experiment design</h2>
+<ul>
+<li>7- and 30-day horizons, weekly-spaced
+<strong>expanding-window</strong> origins.</li>
+<li>365-day validation period for model selection; separate 365-day
+final test period never used for selection.</li>
+<li>7-day: 52 validation origins, 51 test origins. 30-day: 48 origins
+each split (each forecast must fit inside its evaluation window).</li>
+<li>Four candidates per horizon: seasonal naive, additive weekly ETS,
+XGBoost autoregression (28-day lags), MI/PCA-selected Ridge — selected
+independently per horizon by validation MAE only.</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="7-validation-selection--final-test">7. Validation selection
+&amp; final test</h2>
+<ul>
+<li><strong>7-day:</strong> XGBoost wins validation (MAE 4.181) over
+ETS, Ridge, naive. Test MAE <strong>5.05</strong> vs seasonal baseline
+6.41.</li>
+<li><strong>30-day:</strong> weekly-additive ETS wins validation (MAE
+4.394). Test MAE <strong>4.67</strong>, RMSE 7.20, WAPE 27.5%, sMAPE
+41.3%, 90% interval coverage 87.7%, vs seasonal baseline test MAE
+6.49.</li>
+<li>Selection is <strong>never</strong> changed on test rank — ETS's
+lower 7-day test MAE does not override the 7-day XGBoost validation
+selection.</li>
+<li>Bounded hyperparameter sensitivity/tuning search re-validates any
+candidate on the honest rolling-origin backtest; current baseline
+confirmed as the best searched configuration
+(<code>keep_baseline</code>).</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="8-metrics-uncertainty--explainability">8. Metrics, uncertainty
+&amp; explainability</h2>
+<ul>
+<li>MAE/RMSE describe absolute daily miss (RMSE penalizes larger
+misses); WAPE/sMAPE express relative error. 90% intervals are
+validation-residual quantiles — measured test coverage (86.6%/87.7%)
+runs below nominal 90%, so calibration is imperfect and not guaranteed
+to persist.</li>
+<li>Challenger-model explanations (pre-validation XGBoost fit only):
+<strong>SHAP</strong> (leading lags 28/21/14), <strong>PDP</strong>
+(average marginal effect, top 3 features), <strong>ICE</strong>
+(per-validation-day curves exposing heterogeneity PDP averages mask),
+<strong>LIME</strong> (one representative local explanation).</li>
+<li>Primary 30-day ETS is interpreted separately through its own
+level/trend/ weekly-seasonal components and residual diagnostics — none
+of the XGBoost explanations above explain the ETS artifact.</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="9-ethics--fairness-interpretation">9. Ethics &amp; fairness
+interpretation</h2>
+<ul>
+<li>Source has no approved protected demographic attributes (age,
+gender, ethnicity, etc.) — <strong>protected-group fairness cannot be
+assessed</strong>, not because it was skipped, but because the data to
+run it does not exist.</li>
+<li>Substituted operational-equity proxy:
+priority/year/masked-project-group breakdowns with <strong>Wilson
+confidence intervals</strong> for small-group rates.</li>
+<li>Standard mitigation toolkit (reweighting, thresholds, augmentation,
+post-processing) is classification/protected-attribute tooling that does
+not transplant onto a no-protected-attribute regression/forecasting
+task; substituted safeguards are the operational audit above, a
+recommendation to collect governed protected-attribute data before any
+fairness claim, and mandatory human review of forecast-driven
+decisions.</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="10-integration-readiness">10. Integration readiness</h2>
+<ul>
+<li><strong>Locally validated:</strong> all eight notebooks executed;
+52/52 tests pass without skips; FastAPI demo passed a live localhost
+health/forecast/ validation check; MLflow run logs parameters and
+metrics.</li>
+<li><strong>Serving scope:</strong> the API serves one persisted primary
+30-day ETS artifact for all accepted horizons —
+<code>horizon_days=7</code> does <strong>not</strong> load the
+validation-selected 7-day XGBoost model.</li>
+<li><strong>Not ready for operational use:</strong> unresolved
+date-range provenance mismatch; unverified zero-arrival completeness
+assumption; dataset ends March 2023; SLA mapping/clock unapproved; no
+current feed; no real-world staffing outcomes or costs measured.</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="11-conclusion--next-steps">11. Conclusion &amp; next steps</h2>
+<ul>
+<li>Validation selects XGBoost at 7 days and ETS at 30 days; both beat
+the seasonal-naive baseline on held-out test MAE. Neither this result
+nor lower historical error establishes operational or business
+impact.</li>
+<li><strong>Before operational reliance:</strong> resolve the
+provenance/coverage caveats; obtain current representative arrivals
+beyond March 2023; confirm SLA clock/policy with service owners; agree
+business tolerances in advance; test on a genuinely future period; run a
+human-reviewed ROI pilot with approved cost/outcome data.</li>
+<li><strong>Bottom line:</strong> a corrected, reproducible historical
+forecasting prototype with a disclosed retrospective SLA baseline — not
+a contractual SLA-compliance system or a proven staffing-cost/ROI
+tool.</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h2 id="format-note">Format note</h2>
+<p>This file (<code>presentations/technical_slides.md</code>) renders
+two ways via <code>src/generate_technical_reveal_deck.py</code>:</p>
+<ul>
+<li><strong>reveal.js HTML</strong>
+(<code>presentations/technical_reveal_deck.html</code>) — open directly
+in any browser; no install required beyond an internet connection to
+load the reveal.js CDN assets referenced by the page.</li>
+<li><strong>Beamer LaTeX source</strong>
+(<code>presentations/technical_reveal_deck_beamer.tex</code>) — a valid
+Beamer <code>.tex</code> source file. No LaTeX engine is installed in
+this environment, so it is provided as compileable source, not a
+pre-rendered PDF; compile it with
+<code>pdflatex</code>/<code>xelatex</code> where available.</li>
+</ul>
+<p><code>technical_capstone.pptx</code> and
+<code>technical_presentation.pptx</code> in this folder are unchanged by
+this export.</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

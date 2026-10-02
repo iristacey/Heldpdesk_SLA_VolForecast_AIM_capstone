@@ -2,6 +2,8 @@
 
 **In summary:** think of this project as an assembly line with eight stations, one notebook each. Raw ticket data goes in at station one; each station cleans, engineers, models, explains, audits, or packages the results a little further; and everything comes out the other end as reports, dashboards, and a small demo app. This document is the detailed map of that assembly line for anyone who wants to trace exactly which script produces which file.
 
+**Intended audience:** service managers and workforce/capacity planners, supported by technical reviewers who need traceable data preparation, model comparisons and limitations. Forecasting helps in identifying staffing requirements to address volume and demand, and retrospective review of performance surfaces opportunities to improve service based on SLA attainment. The project demonstrates an analytical workflow; it does not demonstrate that using its forecasts improves staffing costs or service outcomes.
+
 This documents the actual, current execution sequence of the capstone pipeline,
 from the raw source file to the generated reports and presentation decks. It
 reflects the real notebook/script call chain in `src/generate_issue_notebooks.py`,

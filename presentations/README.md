@@ -1,7 +1,7 @@
 # Capstone presentations
 
 > **Repository update, 1 October 2026:** publication links refer to the new
-> `Heldpdesk_SLA_VolForecast_AIM_capstone` repository. Run #17 below is historical
+> `Heldpdesk_SLA_VolForecast_AIM_capstone` repository. Run #17 was historical
 > evidence from the previous repository. The new repository's
 > [run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
 > passed before this synchronized update; check the new run after uploading it.
@@ -10,11 +10,13 @@
 
 This package presents the issues.csv capstone: retrospective priority-SLA reference analysis and separate 7- and 30-day daily Ticket-volume forecasting. The month-ahead output is a daily path, not one monthly total.
 
+**Intended audience:** service managers and workforce/capacity planners, supported by technical reviewers who need traceable data preparation, model comparisons and limitations. Forecasting helps in identifying staffing requirements to address volume and demand, and retrospective review of performance surfaces opportunities to improve service based on SLA attainment. The project demonstrates an analytical workflow; it does not demonstrate that using its forecasts improves staffing costs or service outcomes.
+
 > **Validation status:** all eight notebooks executed using the actual `.venv` kernel after the calendar correction. Earlier checks passed **39/39 tests in a clean LOCAL submission copy** using the existing `.venv`, without raw CSV, `mlflow.db`, or editor/cache/archive folders. That copy was not a Git clone or Docker/cloud CI run. The expanded local suite subsequently passed **52 tests without skips**. Corrected validation selects **XGBoost at 7 days** (test MAE 5.049222) and **ETS at 30 days** (test MAE 4.672305); lower ETS 7-day test error does not override validation-only selection. The project is [published on GitHub](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone).
 
 All three manifests record `forecast_calendar_policy='day_after_history_end_v1'`; stale artifact/tuning checks remain enforced. The earlier SciPy DLL block no longer reproduces without any policy bypass. Pandoc is installed; browser-based publication does not require a local Git installation. Corrected deck/poster exports have been regenerated without stale warnings and technical-slide clipping is fixed. Final report DOCX/PDF have been regenerated from the corrected source; instructor review remains separate.
 
-**Verified cloud CI:** [run #17](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36759133985) passed both Python and lightweight Docker test jobs at commit `10d97a12af4d180987aba3d64fb9e7ddd4e83789`, verified on 1 October 2026 (UTC+08:00). Lightweight CI includes skipped tests; it does not mean all 52 tests executed and passed in each job. Docker ran on GitHub's runner, not locally. Full raw-data analysis reproduction in a fresh dependency environment, the full Docker `analysis` target and containerized API serving remain unverified. Check subsequent uploads against their own Actions runs.
+**Verified cloud CI:** [Heldpdesk_SLA_VolForecast_AIM_capstone run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719) passed at commit `744b0770a5426dbee5be86a657aed44127057d75`, before this synchronized update. Lightweight CI includes skipped tests; it does not mean all 52 tests executed and passed in each job. Docker ran on GitHub's runner, not locally. Full raw-data analysis reproduction in a fresh dependency environment, the full Docker `analysis` target and containerized API serving remain unverified. Confirm the new repository's own CI run after this update is uploaded.
 
 **Serving scope:** the API serves **one persisted primary 30-day ETS artifact for all accepted horizons**. `horizon_days=7` does not load the validation-selected 7-day XGBoost: **no separate 7-day model is persisted**. Distinguish horizon-specific experimental selection from the single-model serving demonstration.
 
@@ -29,6 +31,18 @@ Missing demographics, measured ROI or production deployment are not automaticall
 - `technical_capstone.pptx` / `business_capstone.pptx` — generated technical and business decks.
 - `technical_presentation.pptx` — packaged copy of the technical deck.
 - `technical_presentation.md` — narrative, definitions, metrics and caveats.
+- `technical_slides.md` — condensed, slide-formatted derivative of
+  `technical_presentation.md` (12 slides), used only as the source for the
+  reveal.js/Beamer export below; it does not replace or alter the
+  `.pptx` decks or the narrative file.
+- `technical_reveal_deck.html` / `technical_reveal_deck_beamer.tex` —
+  lightweight peer-deck export in the rubric-suggested "Jupyter slides /
+  LaTeX Beamer" formats, generated from `technical_slides.md` by
+  `src/generate_technical_reveal_deck.py`. The `.html` is a self-contained
+  reveal.js deck (open directly in a browser; loads the reveal.js
+  library from its CDN at view time). The `.tex` is valid Beamer source
+  provided as-is — no LaTeX engine is installed in this environment to
+  compile it to PDF.
 - `capstone_poster.png` / `capstone_poster.pdf` — single-page, 12 x 18 inch infographic with seven numbered sections, original line icons, navy/teal/gold styling, and dedicated deployment and responsible-use panels. The PNG is 300 dpi; the PDF preserves vector text and graphics for printing. Regenerated by `src/generate_poster.py` from the same canonical `output/issue_helpdesk` artifacts, without retraining.
 - `generate_presentation.py` — regenerates both PowerPoint decks and the daily-volume chart.
 - `daily_ticket_counts.csv` / `daily_ticket_counts.png` — scoped daily series and monthly view.
