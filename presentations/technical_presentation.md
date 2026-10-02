@@ -2,11 +2,6 @@
 
 **Technical presentation narrative**
 
-> **Repository update, 1 October 2026:** publication links refer to the new
-> `Heldpdesk_SLA_VolForecast_AIM_capstone` repository. Run #17 was historical
-> evidence from the previous repository. The new repository's
-> [run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
-> passed before this synchronized update; check the new run after uploading it.
 
 > **Validation status:** all eight notebooks completed in the actual project `.venv` kernel after the calendar correction. Earlier checks passed **39/39 tests in a clean LOCAL submission copy**, using the existing `.venv`, without raw CSV, `mlflow.db`, or editor/cache/archive folders. That copy was not a Git clone or Docker/cloud CI run. The expanded local suite subsequently passed **52 tests without skips**. Corrected validation selects **XGBoost at 7 days** and **ETS at 30 days**. The actual localhost HTTP demonstration passed, and the project is [published on GitHub](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone).
 
