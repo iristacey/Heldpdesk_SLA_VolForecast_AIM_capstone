@@ -1,12 +1,5 @@
 # Forecast integration and monitoring readiness
 
-> **Repository update, 1 October 2026:** publication links refer to the new
-> `Heldpdesk_SLA_VolForecast_AIM_capstone` repository. Run #17 and the tested
-> snapshot `96136788fa09e20f6a7ca99e0904dd24f32a0811` below belong to the previous
-> repository and must not be attributed to the new one. The new repository's
-> [run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
-> passed before this synchronized update; check the new run after uploading it.
-
 **In summary:** this document is a checklist for what would need to happen before this forecasting work could be trusted to run for real, in daily operations, rather than as a historical research exercise. In short: confirm the data is complete and current, get business sign off on the rules being used, and test it on a genuinely future period before relying on it.
 
 **Intended audience:** service managers and workforce/capacity planners, supported by technical reviewers who need traceable data preparation, model comparisons and limitations. Forecasting helps in identifying staffing requirements to address volume and demand, and retrospective review of performance surfaces opportunities to improve service based on SLA attainment. The project demonstrates an analytical workflow; it does not demonstrate that using its forecasts improves staffing costs or service outcomes.
