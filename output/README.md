@@ -2,6 +2,8 @@
 
 **In summary:** this folder holds the project's analysis tables, charts and reports under `issue_helpdesk/`. All active presentation deliverables, including the poster and both decks, are together in the root [`presentations/`](../presentations/README.md) folder.
 
+**Intended audience:** service managers and workforce/capacity planners, supported by technical reviewers who need traceable data preparation, model comparisons and limitations. Forecasting helps in identifying staffing requirements to address volume and demand, and retrospective review of performance surfaces opportunities to improve service based on SLA attainment. The project demonstrates an analytical workflow; it does not demonstrate that using its forecasts improves staffing costs or service outcomes.
+
 `output/` is the canonical location for analysis and report artifacts.
 Presentation files live in `presentations/`, and the persisted model lives in
 `models/`. Nothing under `output/` is a raw input. See `docs/process_flow.md`

@@ -19,9 +19,15 @@ ROOT = Path(__file__).resolve().parents[1]
 REPORTS = ROOT / "output" / "issue_helpdesk"
 VOLUME = REPORTS / "volume_forecast"
 OUTPUT = ROOT / "presentations"
-NAVY = RGBColor(31, 55, 82)
-BLUE = RGBColor(52, 112, 168)
-GRAY = RGBColor(75, 84, 93)
+# Maroon/crimson palette matched from the manually finalized decks (1 Oct 2026):
+# title/heading maroon, crimson accent bars + "Bottom line" text, warm-gray body text.
+NAVY = RGBColor(0x5B, 0x12, 0x20)
+BLUE = RGBColor(0xC8, 0x10, 0x2E)
+GRAY = RGBColor(0x4A, 0x44, 0x48)
+CONTENT_BG = RGBColor(0xFD, 0xF9, 0xF9)
+TITLE_SUBTEXT = RGBColor(0xF2, 0xD7, 0xDA)
+TITLE_KICKER_COLOR = RGBColor(0xF2, 0xA7, 0xAE)
+TITLE_CAPTION_COLOR = RGBColor(0xD7, 0x9A, 0xA2)
 CONTENT_BOTTOM = Inches(6.93)  # Leave a clear gap above the footer at 7.08 inches.
 CONTENT_GAP = Inches(0.15)
 PRE_CORRECTION_WARNING = "PRE-CORRECTION RESULTS | Comparison re-run required"
@@ -69,6 +75,12 @@ def _text_height(texts, width, sizes, space_after, bold=False):
 def _bullet_sizes(bullets, small=False):
     base_size, long_size = (13, 11) if small else (18, 15)
     return [base_size if len(text) < 120 else long_size for text in bullets]
+
+
+def _bottom_line_height(text):
+    if not text:
+        return 0
+    return _text_height([f"Bottom line: {text}"], Inches(11.5), [15], 0, bold=True)
 
 
 def _bullet_height(bullets, small=False):
@@ -161,6 +173,7 @@ def deck_content():
     )
     numeric_table = {
         "headers": ["Horizon", "Selected model", "Test MAE", "Test RMSE", "Test WAPE", "Test sMAPE", "90% coverage"],
+        "col_weights": [0.8, 2.2, 0.85, 0.85, 0.85, 0.9, 1.0],
         "rows": [
             [
                 f"{days}-day",
@@ -330,6 +343,108 @@ def deck_content():
     return {"technical_capstone.pptx": technical, "business_capstone.pptx": business}
 
 
+# One-line "Bottom line" takeaway per content slide, keyed by exact slide title, matching
+# the manually finalized decks (1 Oct 2026). The title slide has no entry; build_deck
+# renders "Bottom line: {text}" in bold crimson at the end of each slide's bullet list.
+TECHNICAL_BOTTOM_LINES = {
+    "Problem framing and measures": (
+        "this work measures historical SLA-reference attainment and daily ticket arrivals "
+        "\u2014 no live alerting is in scope."
+    ),
+    "Source, scope and data quality": (
+        "one well-documented cohort of 27,348 tickets underpins every result, with licensing "
+        "and coverage caveats stated up front."
+    ),
+    "Retrospective reference results": (
+        "only about one ticket in five met its priority reference, and the shortfall is "
+        "consistent across every priority band."
+    ),
+    "Key numerical measures at a glance": (
+        "both horizons land within roughly five tickets per day of actuals, at ~87% interval "
+        "coverage against a 90% target."
+    ),
+    "Process flow: source to decks": (
+        "a single reproducible pipeline feeds the decks, report and app from one canonical "
+        "output folder."
+    ),
+    "Seven-day and month-ahead forecast design": (
+        "separate 7- and 30-day backtests, selected on validation only, keep the reported "
+        "test results honest."
+    ),
+    "Candidate comparison": (
+        "ETS wins the 30-day horizon and XGBoost the 7-day \u2014 both clearly beat the "
+        "seasonal-naive baseline."
+    ),
+    "Uncertainty and explanation": (
+        "errors are explainable and intervals are calibrated, but feature importance signals "
+        "association, not causation."
+    ),
+    "Ethics and fairness limitations": (
+        "fairness cannot be verified without protected attributes, so human review stays in "
+        "the loop."
+    ),
+    "Deployment, MLOps and Power BI proof": (
+        "the model is reproducible and demo-ready, while the Power BI evidence and monitoring "
+        "remain proof-of-concept."
+    ),
+    "Integration readiness and conclusion": (
+        "a credible historical prototype \u2014 operational validation is the next step, not "
+        "a claim made today."
+    ),
+}
+
+BUSINESS_BOTTOM_LINES = {
+    "The business questions": (
+        "the three driving questions are answered with historical evidence only \u2014 not a "
+        "live operational guarantee."
+    ),
+    "What the data covers": (
+        "one verified, well-documented ticket history backs every number, but current coverage "
+        "and licensing caveats remain open."
+    ),
+    "Historical SLA-reference picture": (
+        "roughly one ticket in five met its configured reference, consistently across "
+        "priority levels."
+    ),
+    "Month-ahead forecast result": (
+        "the selected model lands within a few tickets per day of actuals, but this is a "
+        "historical result, not a live forecast."
+    ),
+    "What the measures mean": (
+        "these numbers describe past accuracy only; they do not predict today's volume or "
+        "guarantee future performance."
+    ),
+    "What remains unknown": (
+        "completeness, policy approval and real-world ROI are still open questions before "
+        "this can inform staffing decisions."
+    ),
+    "Safe path forward": (
+        "resolve data and policy gaps first, then pilot with human review before trusting the "
+        "forecast operationally."
+    ),
+    "Proof of work: a working prototype": (
+        "the model already runs end to end as a demo, but it is not yet a production "
+        "staffing tool."
+    ),
+    "Recommendation": (
+        "treat this as a validated historical prototype and evidence base, not an automated "
+        "staffing or SLA-enforcement system."
+    ),
+}
+
+BOTTOM_LINES_BY_DECK = {
+    "technical_capstone.pptx": TECHNICAL_BOTTOM_LINES,
+    "business_capstone.pptx": BUSINESS_BOTTOM_LINES,
+}
+
+# Title-slide kicker label (above the main title) and caption (below the subtitle bullets),
+# matching the manually finalized decks.
+TITLE_KICKER_BY_DECK = {
+    "technical_capstone.pptx": "TECHNICAL CAPSTONE  |  SERVICE ANALYTICS",
+    "business_capstone.pptx": "BUSINESS CAPSTONE  |  SERVICE ANALYTICS",
+}
+
+
 def _add_bullets(text_frame, bullets, start_index=0, small=False):
     for offset, (text, size) in enumerate(zip(bullets, _bullet_sizes(bullets, small))):
         p = text_frame.paragraphs[0] if start_index == 0 and offset == 0 else text_frame.add_paragraph()
@@ -342,16 +457,31 @@ def _add_bullets(text_frame, bullets, start_index=0, small=False):
     return start_index + len(bullets)
 
 
+def _add_bottom_line(text_frame, text):
+    """Append a bold, crimson 'Bottom line: ...' takeaway after the bullet list."""
+    p = text_frame.add_paragraph()
+    p.text = f"Bottom line: {text}"
+    p.font.name = _font(15, True)[1]
+    p.font.size = Pt(15)
+    p.font.bold = True
+    p.line_spacing = 1.25
+    p.font.color.rgb = BLUE
+    p.space_after = Pt(0)
+
+
 def _add_table(slide, table_spec, top):
     headers = table_spec["headers"]
     rows = table_spec["rows"]
     n_rows = len(rows) + 1
     n_cols = len(headers)
+    weights = table_spec.get("col_weights") or [1] * n_cols
+    total_weight = sum(weights)
+    col_widths = [Inches(11.5 * weight / total_weight) for weight in weights]
     row_heights = [
         max(
-            Inches(0.42 + 0.5 / n_rows),
-            max(_text_height([str(value)], Inches(11.5 / n_cols), [14], 0, index == 0)
-                for value in row),
+            Inches(0.34 + 0.4 / n_rows),
+            max(_text_height([str(value)], col_widths[col], [14], 0, index == 0)
+                for col, value in enumerate(row)),
         )
         for index, row in enumerate([headers] + rows)
     ]
@@ -360,9 +490,8 @@ def _add_table(slide, table_spec, top):
     table = shape.table
     for row, row_height in zip(table.rows, row_heights):
         row.height = row_height
-    col_width = Inches(11.5 / n_cols)
     for col_index in range(n_cols):
-        table.columns[col_index].width = col_width
+        table.columns[col_index].width = col_widths[col_index]
     for col_index, header in enumerate(headers):
         cell = table.cell(0, col_index)
         cell.text = header
@@ -443,11 +572,35 @@ def build_deck(filename, slides):
                 p.font.name = _font(20)[1]
                 p.line_spacing = 1.25
                 p.font.size = Pt(20)
-                p.font.color.rgb = RGBColor(214, 226, 237)
+                p.font.color.rgb = TITLE_SUBTEXT
                 p.space_after = Pt(12)
+            kicker_text = TITLE_KICKER_BY_DECK.get(filename)
+            if kicker_text:
+                kicker = slide.shapes.add_textbox(Inches(0.95), Inches(1.75), Inches(11.5), Inches(0.4))
+                kicker.text_frame.word_wrap = True
+                kicker.text_frame.text = kicker_text
+                kp = kicker.text_frame.paragraphs[0]
+                kp.font.name = _font(14, True)[1]
+                kp.font.size = Pt(14)
+                kp.font.bold = True
+                kp.font.color.rgb = TITLE_KICKER_COLOR
+            scoped_rows = manifest.get("scoped_ticket_rows")
+            date_start = manifest.get("date_start", "")[:4]
+            date_end = manifest.get("date_end", "")[:4]
+            if scoped_rows and date_start and date_end:
+                caption = slide.shapes.add_textbox(Inches(0.95), Inches(6.85), Inches(11.5), Inches(0.35))
+                caption.text_frame.word_wrap = True
+                caption.text_frame.text = (
+                    f"Historical analysis of {scoped_rows:,} scoped tickets  |  "
+                    f"{date_start}-{date_end}  |  {total} slides"
+                )
+                cp = caption.text_frame.paragraphs[0]
+                cp.font.name = _font(12)[1]
+                cp.font.size = Pt(12)
+                cp.font.color.rgb = TITLE_CAPTION_COLOR
         else:
             slide.background.fill.solid()
-            slide.background.fill.fore_color.rgb = RGBColor(248, 250, 252)
+            slide.background.fill.fore_color.rgb = CONTENT_BG
             band = slide.shapes.add_shape(1, Inches(0), Inches(0), Inches(13.333), Inches(0.12))
             band.fill.solid()
             band.fill.fore_color.rgb = BLUE
@@ -469,12 +622,21 @@ def build_deck(filename, slides):
             accent.fill.fore_color.rgb = BLUE
             accent.line.fill.background()
             body_top = Inches(1.68)
+            bottom_line = BOTTOM_LINES_BY_DECK.get(filename, {}).get(title)
+            attach_bottom_line_to_footnote = bool(bottom_line and footnote)
+            attach_bottom_line_to_bullets = bool(bottom_line and not footnote and bullets)
             note_height = _bullet_height(footnote, small=True)
+            if attach_bottom_line_to_footnote:
+                note_height += _bottom_line_height(bottom_line)
             if bullets:
                 body_height = _bullet_height(bullets, small=small_bullets)
+                if attach_bottom_line_to_bullets:
+                    body_height += _bottom_line_height(bottom_line)
                 body = slide.shapes.add_textbox(Inches(0.9), body_top, Inches(11.5), body_height)
                 body.text_frame.word_wrap = True
                 _add_bullets(body.text_frame, bullets, small=small_bullets)
+                if attach_bottom_line_to_bullets:
+                    _add_bottom_line(body.text_frame, bottom_line)
                 body_top += body_height + CONTENT_GAP
             if table_spec:
                 table_height = _add_table(slide, table_spec, body_top)
@@ -498,6 +660,8 @@ def build_deck(filename, slides):
                 note = slide.shapes.add_textbox(Inches(0.9), body_top, Inches(11.5), note_height)
                 note.text_frame.word_wrap = True
                 _add_bullets(note.text_frame, footnote, small=True)
+                if attach_bottom_line_to_footnote:
+                    _add_bottom_line(note.text_frame, bottom_line)
             if any(shape.top + shape.height > CONTENT_BOTTOM for shape in slide.shapes):
                 raise ValueError(f"{context}: content does not fit above the footer at readable font sizes.")
             page_number = slide.shapes.add_textbox(Inches(12.2), Inches(7.08), Inches(0.9), Inches(0.28))

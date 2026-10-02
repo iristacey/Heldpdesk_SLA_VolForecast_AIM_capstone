@@ -3,11 +3,13 @@
 > **Repository update, 1 October 2026:** publication links refer to the new
 > `Heldpdesk_SLA_VolForecast_AIM_capstone` repository. Run #17 and the tested
 > snapshot `96136788fa09e20f6a7ca99e0904dd24f32a0811` below belong to the previous
-> repository. The new repository's
+> repository and must not be attributed to the new one. The new repository's
 > [run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
 > passed before this synchronized update; check the new run after uploading it.
 
 **In summary:** this document is a checklist for what would need to happen before this forecasting work could be trusted to run for real, in daily operations, rather than as a historical research exercise. In short: confirm the data is complete and current, get business sign off on the rules being used, and test it on a genuinely future period before relying on it.
+
+**Intended audience:** service managers and workforce/capacity planners, supported by technical reviewers who need traceable data preparation, model comparisons and limitations. Forecasting helps in identifying staffing requirements to address volume and demand, and retrospective review of performance surfaces opportunities to improve service based on SLA attainment. The project demonstrates an analytical workflow; it does not demonstrate that using its forecasts improves staffing costs or service outcomes.
 
 ## Current status
 
@@ -15,7 +17,7 @@ The project is an offline historical analysis of `data/raw/issues.csv` with a lo
 
 **Local validation complete:** all eight notebooks executed with the actual `.venv` kernel. Earlier checks passed 39/39 tests in a clean LOCAL submission copy using the existing `.venv`, without raw CSV, `mlflow.db`, or editor/cache/archive folders. That copy was not a Git clone, new environment or Docker/cloud CI run. The expanded local suite subsequently passed 52 tests without skips. Corrected validation selects XGBoost at 7 days (validation/test MAE 4.181157/5.049222) and ETS at 30 days (4.393815/4.672305). ETS's lower 7-day test error does not override selection. The earlier DLL block no longer reproduces without policy bypass.
 
-**Publication and cloud CI:** the project is [published on GitHub](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone). [Run #17](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36759133985) passed both Python and lightweight Docker test jobs at commit `10d97a12af4d180987aba3d64fb9e7ddd4e83789`, verified on 1 October 2026 (UTC+08:00). Lightweight CI includes skipped tests; it does not mean all 52 tests executed and passed in each job. The Docker test image ran on GitHub's runner; no local Docker execution is claimed. Check subsequent uploads against their own Actions runs.
+**Publication and cloud CI:** the project is [published on GitHub](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone). [Run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719) passed at commit `744b0770a5426dbee5be86a657aed44127057d75`, before this synchronized update. Lightweight CI includes skipped tests; it does not mean all 52 tests executed and passed in each job. The Docker test image ran on GitHub's runner; no local Docker execution is claimed. Confirm the new repository's own CI run after this update is uploaded.
 
 All three manifests use `forecast_calendar_policy='day_after_history_end_v1'`; artifact and tuning checks reject incompatible baselines. Corrected tuning ties the configured baseline at both horizons (`keep_baseline`), not an improvement or general optimum. The API serves **one persisted primary 30-day ETS artifact for every accepted horizon**. Requesting `horizon_days=7` does not load the validation-selected 7-day XGBoost: **no separate 7-day model is persisted**. Pandoc is installed. Browser-based publication does not require a local Git installation.
 

@@ -1,0 +1,447 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  ignorenonframetext,
+]{beamer}
+\newif\ifbibliography
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% remove section numbering
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{section title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{subsection title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\usetheme[]{white}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\usepackage{caption}
+\captionsetup[table]{skip=6pt}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+\usepackage{caption}
+% Make caption package work with longtable
+\makeatletter
+\def\fnum@table{\tablename~\thetable}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={Help Desk Ticket SLA and Volume Forecasting},
+  pdfauthor={SLA \& Volume Forecast Capstone},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{\texorpdfstring{Help Desk Ticket SLA and Volume
+Forecasting}{Help Desk Ticket SLA and Volume Forecasting}}
+\subtitle{\texorpdfstring{Technical presentation --- peer/reviewer
+deck}{Technical presentation --- peer/reviewer deck}}
+\author{\texorpdfstring{SLA \& Volume Forecast
+Capstone}{SLA \& Volume Forecast Capstone}}
+\date{Historical analysis, 2016--2023}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}[fragile]{Help Desk Ticket SLA and Volume Forecasting}
+\protect\phantomsection\label{help-desk-ticket-sla-and-volume-forecasting}
+Technical peer deck --- reveal.js / Beamer-style export
+
+\textbf{Source of truth:} this deck is a condensed, slide-formatted
+derivative of \texttt{presentations/technical\_presentation.md}. That
+narrative file (and the existing \texttt{technical\_capstone.pptx} deck)
+are unchanged by this export.
+
+Historical analysis of 27,348 scoped Ticket records, 2016-01-03 to
+2023-03-14 UTC. Evidence boundary: the source ends in March 2023 and
+does not validate current operations.
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{block}{1. Problem statement}
+\protect\phantomsection\label{1-problem-statement}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Retrospective task:} compare elapsed resolution time of
+  completed Ticket records with project-configured priority references.
+\item
+  \textbf{Predictive task:} forecast daily counts of exact
+  \texttt{Ticket}-type issues, separate 7- and 30-day horizons, using
+  only past counts and calendar features.
+\item
+  \textbf{ML framing:} univariate time-series regression via model
+  comparison --- seasonal-naive baseline, weekly ETS, XGBoost
+  autoregression (28-day lags), MI/PCA-selected Ridge. Supervised
+  regression, not classification.
+\item
+  \textbf{Research acceptance criterion:} held-out MAE below the
+  same-weekday baseline at both horizons --- met (5.05 vs 6.41 at 7
+  days; 4.67 vs 6.49 at 30 days).
+\item
+  \textbf{Proposed business criterion (not measured/approved):} ≥10\%
+  fewer overtime hours per 100 tickets in a human-reviewed pilot,
+  without worsening an owner-approved service-attainment rate.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{block}{2. Data provenance, licensing \& structure}
+\protect\phantomsection\label{2-data-provenance-licensing--structure}
+\begin{itemize}
+\tightlist
+\item
+  Source: Help Desk Tickets (Mendeley Data v2, CC BY 4.0), mirrored on
+  Kaggle under a conflicting CC0 label --- original attribution
+  retained, mirror-label conflict flagged for resolution.
+\item
+  \texttt{data/raw/issues.csv}: 66,691 rows × 58 fields. Local file
+  bytes verified against both the Kaggle mirror and the official
+  Mendeley digest.
+\item
+  Documented scope is 2016--March 2023, but \texttt{issue\_created}
+  contains dates back to 2007-04-15; pre-2016 rows are profiled and
+  excluded from the primary analysis as a disclosed provenance caveat.
+\item
+  Primary cohort: exact \texttt{issue\_type\ ==\ Ticket}, 2016+ →
+  \textbf{27,348 rows}; 344 of 2,628 calendar days (13.1\%) have no
+  Ticket rows, filled as zero under an unverified completeness
+  assumption.
+\item
+  Two structures are kept separate: the wide 58-column raw table
+  (identity, actors, classification, timestamps, workflow-state fields)
+  versus a narrow, purpose-built one-row-per-day forecasting table
+  (target, past-only lags, rolling means, cyclical calendar encodings)
+  --- this separation is what prevents same-day information leakage into
+  the forecast features.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{block}{3. Pipeline workflow}
+\protect\phantomsection\label{3-pipeline-workflow}
+\begin{itemize}
+\tightlist
+\item
+  Eight notebooks run in sequence, each writing to one canonical
+  \texttt{output/issue\_helpdesk/} folder: data understanding →
+  EDA/feature engineering → model training/comparison → explainability
+  (SHAP/PDP/ICE/ LIME) → bias/fairness audit → GenAI-scope dashboard
+  contract → MLflow deployment/monitoring → business ROI template.
+\item
+  Downstream deliverables (decks, final report, FastAPI demo) all read
+  from that same canonical output folder --- one reproducible source of
+  truth.
+\item
+  Dashboard proof of work: a Power BI-ready data contract and folder
+  (fact tables, model-comparison table, sample report screenshots) built
+  without Power BI Desktop installed locally, substituted with rendered
+  dashboard-styled proof images.
+\item
+  Full function/file-level mapping: \texttt{docs/process\_flow.md}.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{4. Retrospective priority-SLA reference results}
+\protect\phantomsection\label{4-retrospective-priority-sla-reference-results}
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lrrrr@{}}
+\toprule\noalign{}
+Mapped priority & Reference & Assessed & Met & Met rate \\
+\midrule\noalign{}
+\endhead
+Critical & 4h & 2,124 & 524 & 24.7\% \\
+High & 8h & 3,146 & 576 & 18.3\% \\
+Medium & 24h & 11,161 & 2,161 & 19.4\% \\
+Low & 24h & 304 & 72 & 23.7\% \\
+\bottomrule\noalign{}
+\end{longtable}
+}
+
+\begin{itemize}
+\tightlist
+\item
+  16,735 eligible completed Tickets overall; \textbf{3,333 (19.9\%) met
+  reference} --- consistent at roughly 1-in-5 across every priority,
+  including Critical.
+\item
+  Duration is elapsed UTC wall-clock time, not confirmed business-hours
+  or pause-adjusted SLA compliance --- a service owner must validate the
+  clock and mapping before any compliance claim.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{block}{5. From issue events to daily volume}
+\protect\phantomsection\label{5-from-issue-events-to-daily-volume}
+\begin{enumerate}
+\tightlist
+\item
+  Parse \texttt{issue\_created} (UTC, mixed fractional-second formats).
+\item
+  Restrict to \texttt{issue\_type\ ==\ Ticket}, documented 2016+ scope.
+\item
+  Aggregate to one count per calendar day.
+\item
+  Fill no-row dates as zero, only under the stated completeness
+  assumption.
+\item
+  Engineer past-only lag/rolling-mean/cyclical-calendar features.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Result: \textbf{2,628 daily observations}, averaging 10.4 tickets/day,
+  344 assumed zero-arrival days, counts ranging 0--88.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{6. Forecast experiment design}
+\protect\phantomsection\label{6-forecast-experiment-design}
+\begin{itemize}
+\tightlist
+\item
+  7- and 30-day horizons, weekly-spaced \textbf{expanding-window}
+  origins.
+\item
+  365-day validation period for model selection; separate 365-day final
+  test period never used for selection.
+\item
+  7-day: 52 validation origins, 51 test origins. 30-day: 48 origins each
+  split (each forecast must fit inside its evaluation window).
+\item
+  Four candidates per horizon: seasonal naive, additive weekly ETS,
+  XGBoost autoregression (28-day lags), MI/PCA-selected Ridge ---
+  selected independently per horizon by validation MAE only.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{block}{7. Validation selection \& final test}
+\protect\phantomsection\label{7-validation-selection--final-test}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{7-day:} XGBoost wins validation (MAE 4.181) over ETS, Ridge,
+  naive. Test MAE \textbf{5.05} vs seasonal baseline 6.41.
+\item
+  \textbf{30-day:} weekly-additive ETS wins validation (MAE 4.394). Test
+  MAE \textbf{4.67}, RMSE 7.20, WAPE 27.5\%, sMAPE 41.3\%, 90\% interval
+  coverage 87.7\%, vs seasonal baseline test MAE 6.49.
+\item
+  Selection is \textbf{never} changed on test rank ---
+  ETS\textquotesingle s lower 7-day test MAE does not override the 7-day
+  XGBoost validation selection.
+\item
+  Bounded hyperparameter sensitivity/tuning search re-validates any
+  candidate on the honest rolling-origin backtest; current baseline
+  confirmed as the best searched configuration
+  (\texttt{keep\_baseline}).
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{8. Metrics, uncertainty \& explainability}
+\protect\phantomsection\label{8-metrics-uncertainty--explainability}
+\begin{itemize}
+\tightlist
+\item
+  MAE/RMSE describe absolute daily miss (RMSE penalizes larger misses);
+  WAPE/sMAPE express relative error. 90\% intervals are
+  validation-residual quantiles --- measured test coverage
+  (86.6\%/87.7\%) runs below nominal 90\%, so calibration is imperfect
+  and not guaranteed to persist.
+\item
+  Challenger-model explanations (pre-validation XGBoost fit only):
+  \textbf{SHAP} (leading lags 28/21/14), \textbf{PDP} (average marginal
+  effect, top 3 features), \textbf{ICE} (per-validation-day curves
+  exposing heterogeneity PDP averages mask), \textbf{LIME} (one
+  representative local explanation).
+\item
+  Primary 30-day ETS is interpreted separately through its own
+  level/trend/ weekly-seasonal components and residual diagnostics ---
+  none of the XGBoost explanations above explain the ETS artifact.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{9. Ethics \& fairness interpretation}
+\protect\phantomsection\label{9-ethics--fairness-interpretation}
+\begin{itemize}
+\tightlist
+\item
+  Source has no approved protected demographic attributes (age, gender,
+  ethnicity, etc.) --- \textbf{protected-group fairness cannot be
+  assessed}, not because it was skipped, but because the data to run it
+  does not exist.
+\item
+  Substituted operational-equity proxy:
+  priority/year/masked-project-group breakdowns with \textbf{Wilson
+  confidence intervals} for small-group rates.
+\item
+  Standard mitigation toolkit (reweighting, thresholds, augmentation,
+  post-processing) is classification/protected-attribute tooling that
+  does not transplant onto a no-protected-attribute
+  regression/forecasting task; substituted safeguards are the
+  operational audit above, a recommendation to collect governed
+  protected-attribute data before any fairness claim, and mandatory
+  human review of forecast-driven decisions.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{block}{10. Integration readiness}
+\protect\phantomsection\label{10-integration-readiness}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Locally validated:} all eight notebooks executed; 52/52 tests
+  pass without skips; FastAPI demo passed a live localhost
+  health/forecast/ validation check; MLflow run logs parameters and
+  metrics.
+\item
+  \textbf{Serving scope:} the API serves one persisted primary 30-day
+  ETS artifact for all accepted horizons --- \texttt{horizon\_days=7}
+  does \textbf{not} load the validation-selected 7-day XGBoost model.
+\item
+  \textbf{Not ready for operational use:} unresolved date-range
+  provenance mismatch; unverified zero-arrival completeness assumption;
+  dataset ends March 2023; SLA mapping/clock unapproved; no current
+  feed; no real-world staffing outcomes or costs measured.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{11. Conclusion \& next steps}
+\protect\phantomsection\label{11-conclusion--next-steps}
+\begin{itemize}
+\tightlist
+\item
+  Validation selects XGBoost at 7 days and ETS at 30 days; both beat the
+  seasonal-naive baseline on held-out test MAE. Neither this result nor
+  lower historical error establishes operational or business impact.
+\item
+  \textbf{Before operational reliance:} resolve the provenance/coverage
+  caveats; obtain current representative arrivals beyond March 2023;
+  confirm SLA clock/policy with service owners; agree business
+  tolerances in advance; test on a genuinely future period; run a
+  human-reviewed ROI pilot with approved cost/outcome data.
+\item
+  \textbf{Bottom line:} a corrected, reproducible historical forecasting
+  prototype with a disclosed retrospective SLA baseline --- not a
+  contractual SLA-compliance system or a proven staffing-cost/ROI tool.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{block}{Format note}
+\protect\phantomsection\label{format-note}
+This file (\texttt{presentations/technical\_slides.md}) renders two ways
+via \texttt{src/generate\_technical\_reveal\_deck.py}:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{reveal.js HTML}
+  (\texttt{presentations/technical\_reveal\_deck.html}) --- open
+  directly in any browser; no install required beyond an internet
+  connection to load the reveal.js CDN assets referenced by the page.
+\item
+  \textbf{Beamer LaTeX source}
+  (\texttt{presentations/technical\_reveal\_deck\_beamer.tex}) --- a
+  valid Beamer \texttt{.tex} source file. No LaTeX engine is installed
+  in this environment, so it is provided as compileable source, not a
+  pre-rendered PDF; compile it with \texttt{pdflatex}/\texttt{xelatex}
+  where available.
+\end{itemize}
+
+\texttt{technical\_capstone.pptx} and
+\texttt{technical\_presentation.pptx} in this folder are unchanged by
+this export.
+\end{block}
+\end{frame}
+
+\end{document}

@@ -4,13 +4,13 @@
 > [Heldpdesk_SLA_VolForecast_AIM_capstone](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone).
 > [New-repository run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
 > passed at commit `744b0770a5426dbee5be86a657aed44127057d75`, before this synchronized update.
-> Runs #10, #15, #17 and #30 cited below or in supporting documents are historical
+> Runs #10, #15, #17 and #30 cited in supporting documents are historical
 > evidence from the previous repository, not runs in this one.
 > The synchronized files need their own successful CI run after upload.
 
 This is the **main GitHub submission README**. It introduces the research, explains how to reproduce it, and links to the final deliverables. The [data README](data/README.md), [presentations README](presentations/README.md), and [output README](output/README.md) provide supporting detail.
 
-> **Validation status:** all eight notebooks completed with the actual project `.venv` kernel after the recursive-calendar correction. The earlier suite passed **39/39 tests in a clean LOCAL submission copy**, using the existing `.venv`, without the raw CSV, `mlflow.db`, or editor/cache/archive folders. The expanded local suite subsequently passed **52 tests without skips**. The repository is public, and [GitHub Actions run #15](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36758018074) passed both the Python and lightweight Docker test jobs. Lightweight CI includes skipped tests and does not establish full-analysis reproduction in a fresh dependency environment. Validation selects **XGBoost at 7 days** and **ETS at the primary 30-day horizon**. The actual localhost HTTP demonstration also passed. These are historical results, not operational validation.
+> **Validation status:** all eight notebooks completed with the actual project `.venv` kernel after the recursive-calendar correction. The earlier suite passed **39/39 tests in a clean LOCAL submission copy**, using the existing `.venv`, without the raw CSV, `mlflow.db`, or editor/cache/archive folders. The expanded local suite subsequently passed **52 tests without skips**. The repository is now public at [Heldpdesk_SLA_VolForecast_AIM_capstone](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone), and [the new repository's run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719) passed at commit `744b0770a5426dbee5be86a657aed44127057d75`. Lightweight CI includes skipped tests and does not establish full-analysis reproduction in a fresh dependency environment. Validation selects **XGBoost at 7 days** and **ETS at the primary 30-day horizon**. The actual localhost HTTP demonstration also passed. These are historical results, not operational validation.
 
  **Responsible-use boundary:** this is an academic research prototype based on historical data ending **14 March 2023**. It is not a live SLA-compliance system, a validated staffing tool, or evidence of current help-desk performance. Source identity is now verified against public release evidence; daily completeness, the source date-range discrepancy and service-policy assumptions remain unresolved.
 
@@ -38,7 +38,7 @@ This is the **main GitHub submission README**. It introduces the research, expla
 
 Helpdesk planning requires both an understanding of past service outcomes and an estimate of future demand. This project joins two complementary workstreams: retrospectively compare completed tickets against priority-based resolution-time references, and forecast daily ticket arrivals over separate 7- and 30-day horizons.
 
-The intended audience is service managers and capacity planners, supported by technical reviewers who need traceable data preparation, model comparisons and limitations. The project demonstrates an analytical workflow; it does not demonstrate that using its forecasts improves staffing costs or service outcomes.
+The intended audience are service managers and workforce/capacity planners, supported by technical reviewers who need traceable data preparation, model comparisons and limitations. Forecasting helps in identifying staffing requirements to address volume and demand, and retrospective review of performance surfaces opportunities to improve service based on SLA attainment. The project demonstrates an analytical workflow; it does not demonstrate that using its forecasts improves staffing costs or service outcomes.
 
 ### Objectives
 
@@ -134,6 +134,9 @@ Open the [full-size diagram](output/issue_helpdesk/process_flow_diagram.png) for
 
 ```text
 README.md                          Main GitHub submission guide
+Makefile                           install/lint/test/notebooks/ci shortcuts
+pyproject.toml                     Ruff lint configuration
+test_qa_assistant                  Standalone pytest-style check for qa_assistant.py
 configs\
   project_config.yaml              Scope, SLA mapping and forecast configuration
 data\
@@ -143,19 +146,26 @@ notebooks\                         Eight ordered technical notebooks
 src\
   issues_capstone.py               Analysis, forecasting, tracking and reporting
   app.py                           FastAPI deployment POC
-  generate_*.py                    Notebook/figure/deck/poster/report generators
+  qa_assistant.py, qa_cli.py       Keyword-matching README/docs Q&A stub (not an LLM)
+  live_review.py                   Lightweight generated-text sanity checker
+  generate_*.py                    Notebook/figure/deck/poster/report/deployment-demo generators
 models\
   final_volume_forecast_model.joblib
   final_volume_forecast_model_metadata.json
 presentations\                     Poster, decks, narrative, charts and generators
+  technical_slides.md              Condensed slide source for the reveal.js/Beamer export
+  technical_reveal_deck.html       Generated reveal.js technical deck
+  technical_reveal_deck_beamer.tex Generated Beamer source (not compiled to PDF locally)
 output\
   issue_helpdesk\
-    volume_forecast\               Canonical predictions, metrics and selection
+    volume_forecast\               Canonical predictions, metrics, selection and ICE summary
     powerbi\                       Export tables, report specification and samples
-    reports\                       Final report Markdown, DOCX and PDF
-docs\                              Process flow and monitoring guidance
-tests\                             Project contracts and poster/package checks
+    reports\                       Final report, EDA + Feature Engineering report (MD/HTML/PDF/DOCX)
+docs\                              Process flow, monitoring, versioning/rollback and submission-verification guidance
+  media\                           Deployment demo GIF
+tests\                             Project contracts, poster/package checks and QA-assistant/smoke tests
 .github\workflows\tests.yml         Python and Docker test jobs
+.github\workflows\ci.yml            Lint, pytest and notebook-parse checks
 Dockerfile                         Lightweight test and full analysis targets
 requirements.txt                   Full analysis dependencies
 requirements-test.txt              Pinned lightweight test dependencies
@@ -505,15 +515,20 @@ Before submission, also open each deck, poster and exported report for visual re
 | MLOps and deployment POC | [API source](src/app.py), [Dockerfile](Dockerfile), [MLflow run summary](output/issue_helpdesk/mlflow_run_summary.json), [monitoring plan](output/issue_helpdesk/monitoring_plan.json) |
 | Business interpretation and ROI limits | [Notebook 08](notebooks/08_business_analytics_reporting_roi.ipynb), [business summary](output/issue_helpdesk/business_summary.json), [ROI assumptions](output/issue_helpdesk/roi_assumptions_template.csv) |
 | Rubric evidence/self-review | [Capstone completion review](output/issue_helpdesk/capstone_completion_review.md) |
-| Demonstration instructions | [Demonstration](#demonstration); no hosted service or recording is claimed |
+| EDA + Feature Engineering report | [HTML](output/issue_helpdesk/reports/EDA_Feature_Engineering_Report.html) and [PDF](output/issue_helpdesk/reports/EDA_Feature_Engineering_Report.pdf), generated from Notebook 02 |
+| Technical deck, lightweight export | [reveal.js HTML](presentations/technical_reveal_deck.html) and [Beamer source](presentations/technical_reveal_deck_beamer.tex); supplements, does not replace, the technical `.pptx` |
+| Versioning and rollback plan | [Deployment and monitoring doc](docs/deployment_monitoring.md#versioning-and-rollback-plan) |
+| Demonstration instructions | [Demonstration](#demonstration); [demo GIF](docs/media/deployment_demo.gif) of the local API, no hosted service or recording is claimed |
 
 The project is published at https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone. Local validation passed 52 tests without skips, and lightweight Python/Docker cloud CI passed with skips. Publication does not establish instructor approval or full fresh-environment analysis reproduction. Publish only approved material; a verified public dataset license does not authorize sharing unrelated local files.
 
 ## Dockerized deployment and MLOps POC
 
-The local FastAPI POC passed both the full suite's `TestClient` checks and an **actual localhost HTTP demonstration**: health returned OK, `horizon_days=7` returned seven dated points starting **2023-03-15** from the single persisted ETS artifact, and an invalid horizon returned **422**. The temporary server was stopped afterward; no running or hosted endpoint is claimed.
+The local FastAPI POC passed both the full suite's `TestClient` checks and an **actual localhost HTTP demonstration**: health returned OK, `horizon_days=7` returned seven dated points starting **2023-03-15** from the single persisted ETS artifact, and an invalid horizon returned **422**. The temporary server was stopped afterward; no running or hosted endpoint is claimed. A short [demo GIF](docs/media/deployment_demo.gif), captured from real `TestClient` responses, is a lightweight substitute for a screen recording.
 
-**Verified publication and CI:** [GitHub Actions run #15](https://github.com/iristacey/SLA_Ticket_Forecast_Capstone_AIM/actions/runs/36758018074) passed both the Python and lightweight Docker test jobs at commit `fb4886f6dfc4c017601b6efe3ec0659fdd683915`, verified on 1 October 2026 (UTC+08:00). Docker built and ran the test image on GitHub's runner; no local Docker execution is claimed. The lightweight workflow includes skipped tests where dependencies or artifacts are absent, so a successful run must not be described as all 52 tests executing and passing in each job. This evidence applies to that commit; check subsequent uploads against their own Actions runs.
+Artifact/config versioning and a numbered rollback procedure (restart the API process to pick up a restored model/metadata pair, since `src/app.py` caches the loaded artifact for the process lifetime) are documented in [Versioning and rollback plan](docs/deployment_monitoring.md#versioning-and-rollback-plan).
+
+**Verified publication and CI:** [Heldpdesk_SLA_VolForecast_AIM_capstone run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719) passed at commit `744b0770a5426dbee5be86a657aed44127057d75`, verified on 1 October 2026 (UTC+08:00). Docker built and ran the test image on GitHub's runner; no local Docker execution is claimed. The lightweight workflow includes skipped tests where dependencies or artifacts are absent, so a successful run must not be described as all 52 tests executing and passing in each job. **This evidence is from an earlier commit; it has not yet been re-verified against the current commit (`eb35870`, 2 October 2026) and must be re-checked against that commit's own Actions run before being cited as current.**
 
 **Remaining environment limits:** full raw-data analysis reproduction in a fresh dependency environment, the full Docker `analysis` target, and containerized API serving remain unverified. Publication through the GitHub website does not require a local Git installation. The localhost API demonstration is not a hosted or production deployment.
 
@@ -568,6 +583,8 @@ Open `http://127.0.0.1:5000`. The local `mlflow.db` and `mlruns` can be regenera
 
 ## Demonstration
 
+A recorded walkthrough is available as a lightweight [demo GIF](docs/media/deployment_demo.gif): it replays real `/health`, `/model/metadata` and `/forecast` responses in a terminal-style animation and is a substitute for a live screen recording, not a hosted endpoint.
+
 1. Open the poster and technical deck. Show the distinction between retrospective reference attainment and predictive daily volume.
 2. Walk through Notebook 03's horizon-specific validation selection, final-test metrics and coverage, then Notebook 04's XGBoost diagnostics, which do not explain primary ETS.
 3. Show the descriptive fairness audit and Notebook 08's pilot gates. No staffing savings or ROI estimate has been established.
@@ -603,6 +620,8 @@ Before any operational pilot, verify provenance and complete coverage, approve t
 **No generative model or LLM is part of the analysis, forecasts, dashboard summaries or API inference path.** Notebook 06's name does not imply an LLM integration: its outputs are deterministic tables, a data contract and template-based reporting. This choice keeps the analytical numbers reproducible and auditable.
 
 Development assistance is separate from model scope. GitHub Copilot has assisted with project code, documentation and presentation editing. This is not an AI-free authorship claim; the author remains responsible for reviewing the work, verifying results and references, and complying with the programme's AI-use disclosure requirements. No claim is made that an LLM validates the research.
+
+[`src/qa_assistant.py`](src/qa_assistant.py) (with [`src/qa_cli.py`](src/qa_cli.py)) was added separately to try out a GitHub Copilot suggestion: it is a **keyword-matching stub over local docs, not an LLM or generative model**, and it is not used by the analysis, forecasts or API. It stays consistent with, and does not contradict, the "no generative model in the analysis" statement above.
 
 ## Author
 

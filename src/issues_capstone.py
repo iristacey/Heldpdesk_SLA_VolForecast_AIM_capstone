@@ -1019,6 +1019,30 @@ def run_explainability() -> dict:
     pdp_summary = pd.DataFrame(pdp_rows)
     pdp_summary.to_csv(REPORTS / "xgboost_validation_pdp_summary.csv", index=False)
 
+    # ICE (Individual Conditional Expectation): one curve per validation-period
+    # day for the single top-SHAP feature, showing how that day's own prediction
+    # would change as the feature varies, without averaging across days the way
+    # PDP does. This exposes heterogeneity (e.g. crossing/divergent curves) that
+    # PDP's average line can mask.
+    ice_feature = pdp_features[0]
+    ice_result = partial_dependence(
+        model, X.loc[validation_mask], features=[ice_feature], kind="individual"
+    )
+    ice_grid = np.asarray(ice_result["grid_values"][0])
+    ice_curves = np.asarray(ice_result["individual"][0])
+    ice_rows = [
+        {
+            "feature": ice_feature,
+            "validation_row": int(row_index),
+            "grid_value": float(g),
+            "predicted_tickets": float(ice_curves[row_index, col_index]),
+        }
+        for row_index in range(ice_curves.shape[0])
+        for col_index, g in enumerate(ice_grid)
+    ]
+    ice_summary = pd.DataFrame(ice_rows)
+    ice_summary.to_csv(REPORTS / "xgboost_validation_ice_summary.csv", index=False)
+
     # LIME: local explanation for one representative validation-period forecast,
     # showing which feature values pushed that single day's prediction up or down.
     from lime.lime_tabular import LimeTabularExplainer
@@ -1052,8 +1076,9 @@ def run_explainability() -> dict:
         "xgboost_importance": importance.head(15),
         "xgboost_shap": shap_summary.head(15),
         "xgboost_pdp": pdp_summary,
+        "xgboost_ice": ice_summary,
         "xgboost_lime": lime_summary,
-        "interpretation": "XGBoost importance describes split utility within validation-fitted models, not causal ticket drivers. If seasonal naive wins, its forecast is directly traceable to the prior week's same weekday. PDP shows the average marginal effect of each top feature across the validation period; LIME shows a single local explanation for one representative validation-day forecast. All three (SHAP, PDP, LIME) explain the XGBoost challenger only, not the model actually selected for production if it differs.",
+        "interpretation": "XGBoost importance describes split utility within validation-fitted models, not causal ticket drivers. If seasonal naive wins, its forecast is directly traceable to the prior week's same weekday. PDP shows the average marginal effect of each top feature across the validation period; ICE unpacks that same average into one line per validation day for the single top-SHAP feature, so divergent or crossing individual lines reveal day-to-day heterogeneity PDP's average would hide; LIME shows a single local explanation for one representative validation-day forecast. All four (SHAP, PDP, ICE, LIME) explain the XGBoost challenger only, not the model actually selected for production if it differs.",
     }
 
 
