@@ -624,6 +624,7 @@ Development assistance is separate from model scope. GitHub Copilot has assisted
 [`src/qa_assistant.py`](src/qa_assistant.py) (with [`src/qa_cli.py`](src/qa_cli.py)) was added separately to try out a GitHub Copilot suggestion: it is a **keyword-matching stub over local docs, not an LLM or generative model**, and it is not used by the analysis, forecasts or API. It stays consistent with, and does not contradict, the "no generative model in the analysis" statement above.
 
 ## Author
+Ana Jane C. Bitor
 
 ## Acknowledgment and citation
 
