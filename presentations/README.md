@@ -1,10 +1,5 @@
 # Capstone presentations
 
-> **Repository update, 1 October 2026:** publication links refer to the new
-> `Heldpdesk_SLA_VolForecast_AIM_capstone` repository. Run #17 was historical
-> evidence from the previous repository. The new repository's
-> [run #2](https://github.com/iristacey/Heldpdesk_SLA_VolForecast_AIM_capstone/actions/runs/36838533719)
-> passed before this synchronized update; check the new run after uploading it.
 
 **In summary:** this is the single active folder for the capstone poster, technical and business decks, presentation charts, authored narrative, and presentation generators. Read `technical_presentation.md` for the full explanation in both technical and plain language.
 
